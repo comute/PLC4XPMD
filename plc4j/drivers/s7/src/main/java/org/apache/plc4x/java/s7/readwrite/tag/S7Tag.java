@@ -77,9 +77,22 @@ public class S7Tag implements PlcTag, Serializable {
         this.dataType = dataType;
         this.memoryArea = memoryArea;
         this.blockNumber = blockNumber;
-        this.byteOffset = byteOffset;
-        this.bitOffset = bitOffset;
         this.numElements = numElements;
+        
+        //TODO: Should this address conversion be done in the mspec?
+        switch (dataType) {
+            case COUNTER: {
+                this.bitOffset = (byte) ((byteOffset) & 0x0007);
+                this.byteOffset = (byteOffset >> 3);
+                break;
+            }
+            default :{
+                this.byteOffset = byteOffset;
+                this.bitOffset = bitOffset;                
+            }
+            
+        }
+        
     }
 
     @Override
@@ -97,6 +110,8 @@ public class S7Tag implements PlcTag, Serializable {
                 return PlcValueType.DATE_AND_LTIME;
             case "DTL":
                 return PlcValueType.DATE_AND_LTIME;
+            case "COUNTER":
+                return PlcValueType.WORD;                
             default:
                 return PlcValueType.valueOf(dataType.name());
         }

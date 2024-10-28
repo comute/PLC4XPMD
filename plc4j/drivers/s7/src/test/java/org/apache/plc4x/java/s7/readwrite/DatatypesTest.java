@@ -27,7 +27,17 @@ public class DatatypesTest {
 
     public static void main(String[] args) throws Exception {
         //try (PlcConnection connection = new DefaultPlcDriverManager().getConnection("s7://192.168.24.83")) {
-        try (PlcConnection connection = new DefaultPlcDriverManager().getConnection("s7://192.168.23.30")) {
+        //
+        String URL1 = "s7://192.168.23.30";
+        
+        //
+        String URL2 = "s7://192.168.0.47?remote-rack=0&"
+                + "remote-slot=3&"
+                + "controller-type=S7_400&read-timeout=8&"
+                + "ping=false&ping-time=2&retry-time=3";
+        
+        
+        try (PlcConnection connection = new DefaultPlcDriverManager().getConnection(URL1)) {
                 final PlcReadRequest.Builder builder = connection.readRequestBuilder();
             builder.addTagAddress("bool-value-1", "%DB2:0.0:BOOL"); // true
             builder.addTagAddress("bool-value-2", "%DB2:2.1:BOOL"); // false
@@ -53,9 +63,12 @@ public class DatatypesTest {
             builder.addTagAddress("udint-array", "%DB2:50:UDINT[2]"); // 12345, 23456
             builder.addTagAddress("real-value", "%DB2:58:REAL"); // 3.14159
             builder.addTagAddress("real-array", "%DB2:62:REAL[2]"); // 12.345, 12.345
-            builder.addTagAddress("lreal-value", "%DB2:70:LREAL"); // 3.14159265358979
-            builder.addTagAddress("lreal-array", "%DB2:78:LREAL[2]"); // 1.2345, -1.2345
+            
+//            builder.addTagAddress("lreal-value", "%DB2:70:LREAL"); // 3.14159265358979
+//            builder.addTagAddress("lreal-array", "%DB2:78:LREAL[2]"); // 1.2345, -1.2345
+            
             builder.addTagAddress("string-value", "%DB2:94:STRING(10)"); // "Hurz"
+            
             // When reading a sized STRING array, this has to be translated into multiple items
             //builder.addField("string-array", "%DB2:350:STRING(10)[2]"); // "Wolf", "Lamm"
             builder.addTagAddress("time-value", "%DB2:862:TIME"); // 1234ms
