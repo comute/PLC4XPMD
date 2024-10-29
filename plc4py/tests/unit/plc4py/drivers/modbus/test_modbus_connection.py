@@ -31,13 +31,12 @@ import logging
 from plc4py.spi.values.PlcValues import PlcINT, PlcREAL, PlcList, PlcBOOL, PlcCHAR
 
 logger = logging.getLogger("testing")
-TEST_SERVER_IP = "192.168.190.152"
 
 
 @pytest_asyncio.fixture
 async def connection() -> AsyncGenerator[PlcConnection, None]:
     driver_manager = PlcDriverManager()
-    async with driver_manager.connection("modbus://192.168.190.152:502") as connection:
+    async with driver_manager.connection("modbus://127.0.0.1:502") as connection:
         yield connection
 
 

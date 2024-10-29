@@ -45,7 +45,7 @@ from plc4py.spi.values.PlcValues import (
 @pytest_asyncio.fixture
 async def connection() -> AsyncGenerator[PlcConnection, None]:
     driver_manager = PlcDriverManager()
-    async with driver_manager.connection("umas://192.168.190.152:502") as connection:
+    async with driver_manager.connection("umas://127.0.0.1:502") as connection:
         yield connection
 
 
