@@ -185,4 +185,3 @@ async def test_plc_driver_modbus_read_holding_string_odd(connection):
             ]
         ),
     )
-
