@@ -32,7 +32,6 @@ description = "Plc4Py The Python Industrial IOT Adapter"
 version = "0.13"
 readme = "README.md"
 dependencies = [
-        "setuptools",
         "aenum",
         "bitarray",
         "typing_extensions",
@@ -79,3 +78,12 @@ umas = "plc4py.drivers.umas.UmasConnection:UmasDriverLoader"
 [project.entry-points."plc4py.transports"]
 tcp = "plc4py.spi.transport.TCPTransport:TCPTransportLoader"
 mock = "plc4py.spi.transport.MockTransport:MockTransportLoader"
+
+[tool.pytest.ini_options]
+minversion = "6.0"
+addopts = "-ra -q"
+testpaths = [
+    "tests",
+]
+asyncio_mode = "auto"
+log_cli = "true"
