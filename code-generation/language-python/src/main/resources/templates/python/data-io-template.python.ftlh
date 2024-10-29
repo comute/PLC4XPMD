@@ -372,7 +372,7 @@ class ${type.name}:
             for val in values.getStruct().get("${arrayField.name}").get_list():
                 <#if elementTypeReference.isByteBased()>
                 value: ${helper.getLanguageTypeNameForField(arrayField)} = val.get_raw()
-                write_buffer.write_byte_array("", value)
+                write_buffer.write_byte(value, 8, "")
                 <#else>
                 value: ${helper.getLanguageTypeNameForField(arrayField)} = val.get_${helper.camelCaseToSnakeCase(helper.getLanguageTypeNameForField(arrayField)?cap_first)}()
                 ${helper.getWriteBufferWriteMethodCall(elementTypeReference.asSimpleTypeReference().orElseThrow(), "value", arrayField)}
@@ -382,7 +382,7 @@ class ${type.name}:
                 <#if elementTypeReference.isByteBased()>
                 <@emitImport import="from typing import List" />
                 value: ${helper.getLanguageTypeNameForField(arrayField)} = val.get_raw()
-                write_buffer.write_byte_array("", value)
+                write_buffer.write_byte(value, 8, "")
                 <#else>
                 value: ${helper.getLanguageTypeNameForTypeReference(elementTypeReference)} = val.get_${helper.camelCaseToSnakeCase(helper.getLanguageTypeNameForTypeReference(elementTypeReference)?cap_first)}()
                 ${helper.getWriteBufferWriteMethodCall(elementTypeReference.asSimpleTypeReference().orElseThrow(), "(" + arrayField.name + ")", arrayField)}
@@ -410,7 +410,9 @@ class ${type.name}:
                     <#case "manual">
                         <#assign manualField=field.asManualField().orElseThrow()>
             # Manual Field (${manualField.name})
-            ${helper.toSerializationExpression(manualField, manualField.type, manualField.serializeExpression, type.parserArguments.orElse(null))}
+            <@emitImport import="from plc4py.protocols.${protocolName} import StaticHelper" />
+            value: PlcValue = _value
+            StaticHelper.${helper.toSerializationExpression(manualField, manualField.type, manualField.serializeExpression, type.parserArguments.orElse(null))}
                     <#break>
 
                     <#case "reserved">

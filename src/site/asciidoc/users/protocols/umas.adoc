@@ -19,6 +19,8 @@
 
 == UMAS (Schneider Electric PLCs)
 
+(Supported by Plc4Py Only)
+
 === Connection String Options
 
 [cols="2,2a,2a,2a,4a"]
@@ -31,7 +33,7 @@
  - `tcp`
 5+|Config options:
 |`request-timeout` |INT |5000| |Default timeout for all types of requests.
-|`default-unit-identifier` |INT |1| |Unit-identifier or slave-id that identifies the target PLC (On RS485 multiple Modbus Devices can be listening). Defaults to 1.
+|`unit-identifier` |INT |1| |Unit-identifier or slave-id that identifies the target PLC. Defaults to 1.
 +++
 
 |===
@@ -70,7 +72,7 @@ Note the transport, port and option fields are optional.
 
 ==== General Format
 
-In general all Modbus addresses have this format:
+In general all UMAS addresses have this format:
 
 ----
 {tag-name}.{child-name}.{child-name}:{data-type}[{array-size}]
@@ -79,42 +81,20 @@ In general all Modbus addresses have this format:
 Depending on the type of tag the child-name parameters are optional.
 e.g. A tag with a BOOL data type could be 'TESTING_BOOL_1' whereas
 if it is a UDT the tag name is followed by the child 'TESTING_UDT_1.START' which in itself could be a BOOL.
+
 If the array-size part is omitted, the size-default of `1` is assumed.
+
 If the data-type part is omitted, it defaults to the data type of the tag read from the PLC.
 
 ==== Memory Areas
 
-There are a number of memory areas defined in the Modbus specification.
+Apart from tags defined in the PLC the driver is also able to access the %S and %SW
+system memory areas.
 
-- Discrete Input Area
-- Coil Area
-- Input Register Area
-- Holding Register
-- Extended Register Area
+The specific address details of the data in these areas are outlined in the devices
+manual.
 
-[cols="2,2a,5,1,2,1"]
-|===
-|Name |Memory Area Aliases |Description |Bit-Size | Permissions | Starting Address
-
-|Discrete Input   |`discrete-input:` or `1` or `1x`   |Boolean input value, usually representing a binary input to the PLC |1 |Read Only|1
-|Coil             |`coil:` or `0` or `0x`             |Boolean value, usually representing a binary output from the PLC   |1 |Read/Write|1
-|Input Register   |`input-register:` or `3` or `3x`   |Short input value, usually representing an analog input to the PLC  |16 |Read Only|1
-|Holding Register |`holding-register:` or `4` or `4x` |Short value, usually representing an analog output from the PLC    |16 |Read/Write|1
-|Extended Register |`extended-register:` or `6` or `6x` |Short value,    |16 |Read/Write|0
-
-|===
-
-Initially the Modbus format allowed up to 10000 address to be specified or the discrete inputs, coils, input registers and holding registers.
-Later on, this was expanded to allow up 65536 address within each memory area (except the extended register area).
-When using the long address format i.e. input-registers:1 the addresses between 1 and 65535 are able to be specified.
-When using the shorter versions there are two formats available  i.e. 30001 and 300001.
-With the shorter format 3XXXX being limited to between 30001 and 39999, while the longer format 3XXXXX being limited to between 300001 and 365535.
-These memory areas all start at address 1.
-
-For the extended register area the addresses 0-99999 are able to be specified. These registers are mapped to file records with a length of 10000. Address 600000 corresponds to the first address in file record 0.
-Address 610000 is then the first address in the second file record and so on. It is noted that there is generally only 10 file records (600000 thru to 699999) however the spec allows for 65536 file records.
-Using the extended-register: format you are able to reference all of these, if the shorter format is used then it is limited to 699999.
-This memory area starts at address 0.
+An example of the address format of these areas is %SW1 or %S20.
 
 ==== Data Types
 
@@ -130,76 +110,9 @@ The following data types are supported
 - DINT (int 32)
 - UDINT (uint 32)
 - DWORD (uint 32)
-- LINT (int 64)
-- ULINT (uint 64)
-- LWORD (uint 64)
 - REAL (float)
-- LREAL (double)
-- CHAR (char)
-- WCHAR (2 byte char)
-
-==== Some useful tips
-
-Most memory areas start at address 1, except for the extended register area which starts at 0. These are both mapped to 0x0000 when it is sent in the Modbus protocol.
-
-The input, holding and extended registers consist of 16-bit registers while the discrete input and coil areas consist of bits.
-
-The following Modbus function codes are supported:-
-
-- 0x01 (Read Coils)
-- 0x02 (Read Discrete Inputs)
-- 0x03 (Read Holding Registers)
-- 0x04 (Read Input Registers)
-- 0x05 (Write Single Coil)
-- 0x06 (Write Single Register)
-- 0x0F (Write Multiple Coils)
-- 0x10 (Write Multiple Registers)
-- 0x14 (Read File Record)(Extended Register Read)
-- 0x15 (Write File Record)(Extended Register Write)
-
-==== Examples
-
-To read 10 holding registers starting at address 20 and parse as Unsigned Integers the following examples are all valid.
-
-- holding-register:20:UINT[10]
-- 400020:UINT[10]
-- 4x00020:UINT[10]
-- 40020:UINT[10]
-- 4x0020:UINT[10]
-
-To read 1 holding register at address 5678 the following examples are valid.
-
-- holding-register:5678
-- 405678
-- 4x05678
-- 45678
-- 4x5678
-
-To read 1 holding register of unit 10 at address 5678 the following examples are valid.
-
-- holding-register:5678{unit-id: 10}
-- 405678{unit-id: 10}
-- 4x05678{unit-id: 10}
-- 45678{unit-id: 10}
-- 4x5678{unit-id: 10}
-
-To read 10 extended registers starting at address 50 the following examples are valid.
-
-- extended-register:50[10]
-- 600050[10]
-- 6x00050[10]
-- 60050[10]
-- 6x0050[10]
-
-This corresponds to addresses 50-59 in file record 1.
-
-To read 10 extended registers starting at address 9995 the following examples are valid.
-
-- extended-register:9995[10]
-- 609995[10]
-- 6x09995[10]
-- 69995[10]
-- 6x9995[10]
-
-This corresponds to addresses 9995-9999 in file record 1 and addresses 0-5 in file record 2.
-Note that this request is split into 2 sub requests in the Modbus protocol.
+- STRING (char)
+- TIME
+- DATE
+- TOD (Time of Day)
+- DATE_AND_TIME

@@ -529,34 +529,34 @@ class DataItem:
         elif data_type == "CHAR" and number_of_values == int(1):  # CHAR
             # Simple Field (value)
             value: str = _value.get_str()
-            write_buffer.write_str((value), 8, "UTF-8", "value")
+            write_buffer.write_str((value), 8, "value", "UTF-8")
 
         elif data_type == "CHAR":  # List
             values: PlcList = cast(PlcList, _value)
             for val in values.get_list():
                 value: str = val.get_str()
-                write_buffer.write_str((value), 8, "UTF-8", "value")
+                write_buffer.write_str((value), 8, "value", "UTF-8")
 
         elif data_type == "WCHAR" and number_of_values == int(1):  # WCHAR
             # Simple Field (value)
             value: str = _value.get_str()
-            write_buffer.write_str((value), 16, "UTF-16", "value")
+            write_buffer.write_str((value), 16, "value", "UTF-16")
 
         elif data_type == "WCHAR":  # List
             values: PlcList = cast(PlcList, _value)
             for val in values.get_list():
                 value: str = val.get_str()
-                write_buffer.write_str((value), 16, "UTF-16", "value")
+                write_buffer.write_str((value), 16, "value", "UTF-16")
 
         elif data_type == "STRING":  # STRING
             # Simple Field (value)
             value: str = _value.get_str()
-            write_buffer.write_str((value), 255, "UTF-8", "value")
+            write_buffer.write_str((value), 255, "value", "UTF-8")
 
         elif data_type == "WSTRING":  # STRING
             # Simple Field (value)
             value: str = _value.get_str()
-            write_buffer.write_str((value), 255, "UTF-16", "value")
+            write_buffer.write_str((value), 255, "value", "UTF-16")
 
     @staticmethod
     def get_length_in_bytes(

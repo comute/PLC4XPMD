@@ -19,9 +19,11 @@
 import asyncio
 from asyncio import AbstractEventLoop, Transport
 from dataclasses import dataclass, field
+from logging import raiseExceptions
 from typing import Dict, List, Tuple, cast
 
-from plc4py.api.exceptions.exceptions import PlcFieldParseException
+from plc4py.drivers.umas.UmasVariables import UmasCustomVariable, UmasArrayVariable
+from plc4py.api.exceptions.exceptions import PlcFieldParseException, PlcRuntimeException
 from plc4py.api.messages.PlcRequest import (
     PlcBrowseRequest,
     PlcReadRequest,
@@ -34,7 +36,7 @@ from plc4py.api.messages.PlcResponse import (
 )
 from plc4py.api.value.PlcValue import PlcResponseCode, PlcValue
 from plc4py.drivers.umas.UmasConfiguration import UmasConfiguration
-from plc4py.drivers.umas.UmasTag import UmasTag
+from plc4py.drivers.umas.UmasTag import UmasTag, UmasTagBuilder
 from plc4py.drivers.umas.UmasVariables import (
     UmasVariable,
     UmasVariableBuilder,
@@ -103,7 +105,11 @@ from plc4py.protocols.umas.readwrite.VariableReadRequestReference import (
     VariableReadRequestReference,
 )
 from plc4py.spi.generation.ReadBuffer import ReadBufferByteBased
-from plc4py.spi.messages.utils.ResponseItem import ResponseItem
+from plc4py.spi.messages.utils.ResponseItem import (
+    ResponseItem,
+    PlcBrowseItem,
+    ArrayInfo,
+)
 from plc4py.utils.GenericTypes import ByteOrder
 from plc4py.protocols.umas.readwrite.UmasPDUWriteVariableRequest import (
     UmasPDUWriteVariableRequestBuilder,
@@ -420,13 +426,11 @@ class UmasDevice:
                 quantity = 1
 
             if request_tag.data_type == None:
-                request_tag.data_type = UmasDataType(
-                    self.variables[request_tag.tag_name].data_type
-                )
+                data_type = UmasDataType(self.variables[request_tag.tag_name].data_type)
+            else:
+                data_type = UmasDataType[request_tag.data_type]
 
-            value = DataItem.static_parse(
-                read_buffer, request_tag.data_type, request_tag.quantity
-            )
+            value = DataItem.static_parse(read_buffer, data_type, request_tag.quantity)
             response_item = ResponseItem(
                 PlcResponseCode.OK,
                 value,
@@ -619,6 +623,66 @@ class UmasDevice:
             response.tags = {**response.tags, **response_chunk.tags}
         return response
 
+    def generate_browse_tree(self, tag) -> PlcBrowseItem[UmasTag]:
+        builder = UmasTagBuilder()
+        if isinstance(tag, UmasElementryVariable):
+            plc_tag = builder.create(
+                tag.variable_name
+                + ":"
+                + str(UmasDataType(tag.data_type).data_type_conversion)
+            )
+
+            return PlcBrowseItem[UmasTag](
+                plc_tag, tag.variable_name, True, True, False, False, False
+            )
+
+        elif isinstance(tag, UmasCustomVariable):
+            plc_tag = builder.create(tag.variable_name)
+            children: Dict[str, "PlcBrowseItem"] = {}
+            for tag_name, child in tag.children.items():
+                children[tag_name] = self.generate_browse_tree(child)
+            return PlcBrowseItem[UmasTag](
+                plc_tag,
+                tag.variable_name,
+                True,
+                True,
+                False,
+                False,
+                False,
+                [],
+                children,
+            )
+        elif isinstance(tag, UmasArrayVariable):
+            plc_tag = builder.create(
+                tag.variable_name
+                + ":"
+                + str(UmasDataType(tag.data_type).data_type_conversion)
+                + "["
+                + str(tag.end_index)
+                + "]"
+            )
+
+            return PlcBrowseItem[UmasTag](
+                plc_tag,
+                tag.variable_name,
+                True,
+                True,
+                False,
+                False,
+                True,
+                [
+                    ArrayInfo(
+                        tag.end_index - tag.start_index + 1,
+                        tag.start_index,
+                        tag.end_index,
+                    )
+                ],
+            )
+        else:
+            raise PlcRuntimeException(
+                f"Variable of type {type(tag).__name__} is not supported"
+            )
+
     async def browse(
         self, request: PlcBrowseRequest, transport: Transport
     ) -> PlcBrowseResponse:
@@ -628,9 +692,9 @@ class UmasDevice:
         loop = asyncio.get_running_loop()
         await self._update_plc_project_info(transport, loop)
         response_items = {}
+
         for key, query in request.queries.items():
-            response_items[key] = [
-                ResponseItem[UmasTag](PlcResponseCode.OK, tag)
-                for tag in self.variables.values()
-            ]
+            response_items[key] = []
+            for tag in self.variables.values():
+                response_items[key].append(self.generate_browse_tree(tag))
         return PlcBrowseResponse(PlcResponseCode.OK, response_items)

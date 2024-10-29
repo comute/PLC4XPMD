@@ -248,6 +248,24 @@
           </execution>
 
           <execution>
+            <id>python-dependency-check</id>
+            <phase>test-compile</phase>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+            <configuration>
+              <executable>${python.venv.bin}${python.exe.bin}</executable>
+              <arguments>
+                <argument>-m</argument>
+                <argument>deptry</argument>
+                <argument>-ddg</argument>
+                <argument>dev</argument>
+                <argument>.</argument>
+              </arguments>
+            </configuration>
+          </execution>
+
+          <execution>
             <id>python-test</id>
             <phase>test</phase>
             <goals>

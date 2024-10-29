@@ -94,7 +94,6 @@ class UmasElementryVariable(UmasVariable):
     def get_write_variable_reference(
         self, address: str, value: PlcValue
     ) -> VariableWriteRequestReference:
-        ss = UmasDataType(self.data_type).data_type_size
         write_buffer = WriteBufferByteBased(
             UmasDataType(self.data_type).data_type_size, ByteOrder.LITTLE_ENDIAN
         )
@@ -108,11 +107,11 @@ class UmasElementryVariable(UmasVariable):
         if self.data_type == UmasDataType.STRING.value:
             return VariableWriteRequestReference(
                 is_array=1,
-                data_size_index=UmasDataType(self.data_type).request_size,
+                data_size_index=1,
                 block=self.block_no,
                 base_offset=self.offset,
                 offset=self.base_offset,
-                array_length=16,
+                array_length=len(value.value),
                 record_data=bytearray(write_buffer.bb),
             )
         else:
@@ -204,7 +203,19 @@ class UmasArrayVariable(UmasVariable):
         if len(split_tag_address) > 1:
             address_index = int(split_tag_address[1])
         data_type_enum = UmasDataType(self.data_type)
+
         if address_index:
+            write_buffer = WriteBufferByteBased(
+                UmasDataType(self.data_type).data_type_size * address_index,
+                ByteOrder.LITTLE_ENDIAN,
+            )
+            DataItem.static_serialize(
+                write_buffer,
+                value,
+                UmasDataType(self.data_type),
+                address_index,
+                ByteOrder.LITTLE_ENDIAN,
+            )
             return VariableWriteRequestReference(
                 is_array=0,
                 data_size_index=data_type_enum.request_size,
@@ -212,10 +223,22 @@ class UmasArrayVariable(UmasVariable):
                 base_offset=self.base_offset,
                 offset=self.offset
                 + (address_index - self.start_index) * data_type_enum.data_type_size,
-                array_length=None,
-                record_data=None,
+                array_length=address_index,
+                record_data=bytearray(write_buffer.bb),
             )
         else:
+            write_buffer = WriteBufferByteBased(
+                UmasDataType(self.data_type).data_type_size
+                * (self.end_index - self.start_index + 1),
+                ByteOrder.LITTLE_ENDIAN,
+            )
+            DataItem.static_serialize(
+                write_buffer,
+                value,
+                UmasDataType(self.data_type),
+                self.end_index - self.start_index + 1,
+                ByteOrder.LITTLE_ENDIAN,
+            )
             return VariableWriteRequestReference(
                 is_array=1,
                 data_size_index=data_type_enum.request_size,
@@ -223,7 +246,7 @@ class UmasArrayVariable(UmasVariable):
                 base_offset=self.base_offset,
                 offset=self.offset,
                 array_length=self.end_index - self.start_index + 1,
-                record_data=None,
+                record_data=bytearray(write_buffer.bb),
             )
 
     def get_byte_length(self) -> int:

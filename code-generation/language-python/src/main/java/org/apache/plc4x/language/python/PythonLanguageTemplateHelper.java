@@ -895,7 +895,8 @@ public class PythonLanguageTemplateHelper extends BaseFreemarkerLanguageTemplate
             case BIT:
                 return "write_buffer.write_bit(" + fieldName + ", \"" + logicalName + "\"" + writerArgsString + ")";
             case BYTE:
-                return "write_buffer.write_byte(" + fieldName + ", \"" + logicalName + "\"" + writerArgsString + ")";
+                ByteTypeReference byteTypeReference = (ByteTypeReference) simpleTypeReference;
+                return "write_buffer.write_byte(" + fieldName + ", " + byteTypeReference.getSizeInBits() + ", \"" + logicalName + "\"" + writerArgsString + ")";
             case UINT:
                 IntegerTypeReference unsignedIntegerTypeReference = (IntegerTypeReference) simpleTypeReference;
                 if (unsignedIntegerTypeReference.getSizeInBits() <= 8) {
@@ -945,7 +946,7 @@ public class PythonLanguageTemplateHelper extends BaseFreemarkerLanguageTemplate
                     .orElseThrow(() -> new FreemarkerException("Encoding must be a quoted string value")).getValue();
                 String length = Integer.toString(simpleTypeReference.getSizeInBits());
                 return "write_buffer.write_str(" + fieldName + ", " + length + ", \"" +
-                    encoding + "\", \"" + logicalName + "\"" + writerArgsString + ")";
+                    logicalName + "\", \"" + encoding + "\"" + writerArgsString + ")";
             }
             case VSTRING: {
                 VstringTypeReference vstringTypeReference = (VstringTypeReference) simpleTypeReference;
@@ -957,7 +958,7 @@ public class PythonLanguageTemplateHelper extends BaseFreemarkerLanguageTemplate
                 String lengthExpression = toExpression(field, null, vstringTypeReference.getLengthExpression(), null, Collections.singletonList(new DefaultArgument("stringLength", new DefaultIntegerTypeReference(SimpleTypeReference.SimpleBaseType.INT, 32))), true, false);
                 String length = Integer.toString(simpleTypeReference.getSizeInBits());
                 return "write_buffer.write_str(" + fieldName + ", " + lengthExpression + ", \"" +
-                    encoding + "\", \"" + logicalName + "\"" + writerArgsString + ")";
+                    logicalName + "\", \"" + encoding + "\"" + writerArgsString + ")";
             }
             case DATE:
             case TIME:
@@ -1511,7 +1512,7 @@ public class PythonLanguageTemplateHelper extends BaseFreemarkerLanguageTemplate
         } else if ((serializerArguments != null) && serializerArguments.stream()
             .anyMatch(argument -> argument.getName().equals(variableLiteralName))) {
             tracer = tracer.dive("serialization argument");
-            return tracer + "self." + camelCaseToSnakeCase(variableLiteralName) +
+            return tracer + camelCaseToSnakeCase(variableLiteralName) +
                 variableLiteral.getChild()
                     .map(child -> "." + camelCaseToSnakeCase(toVariableExpression(field, typeReference, child, parserArguments, serializerArguments, serialize, suppressPointerAccess, true)))
                     .orElse("");

@@ -39,6 +39,7 @@ setup(
         "wheel",
     ],
     install_requires=[
+        "setuptools",
         "pytest-asyncio>=0.18.3",
         "pip-tools",
         "black",

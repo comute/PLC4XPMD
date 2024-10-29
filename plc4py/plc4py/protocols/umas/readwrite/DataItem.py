@@ -69,15 +69,6 @@ class DataItem:
             value: bool = read_buffer.read_bit("")
 
             return PlcBOOL(value)
-        if data_type == UmasDataType.BOOL:  # List
-            # Array field (value)
-            # Count array
-            item_count: int = int(number_of_values)
-            value: List[PlcValue] = []
-            for _ in range(item_count):
-                value.append(PlcBOOL(bool(read_buffer.read_bit(""))))
-
-            return PlcList(value)
         if data_type == UmasDataType.EBOOL and number_of_values == int(1):  # BOOL
 
             # Reserved Field (Compartmentalized so the "reserved" variable can't leak)
@@ -95,15 +86,6 @@ class DataItem:
             value: bool = read_buffer.read_bit("")
 
             return PlcBOOL(value)
-        if data_type == UmasDataType.EBOOL:  # List
-            # Array field (value)
-            # Count array
-            item_count: int = int(number_of_values)
-            value: List[PlcValue] = []
-            for _ in range(item_count):
-                value.append(PlcBOOL(bool(read_buffer.read_bit(""))))
-
-            return PlcList(value)
         if data_type == UmasDataType.BYTE and number_of_values == int(1):  # BYTE
 
             # Simple Field (value)
@@ -113,7 +95,7 @@ class DataItem:
         if data_type == UmasDataType.BYTE:  # List
             # Array field (value)
             # Count array
-            item_count: int = int(number_of_values * int(8))
+            item_count: int = int(number_of_values)
             value: List[PlcValue] = []
             for _ in range(item_count):
                 value.append(PlcBYTE(int(read_buffer.read_byte(""))))
@@ -285,7 +267,9 @@ class DataItem:
                 )
 
             return PlcList(value)
-        if data_type == UmasDataType.DT and number_of_values == int(1):  # DATE_AND_TIME
+        if data_type == UmasDataType.DATE_AND_TIME and number_of_values == int(
+            1
+        ):  # DATE_AND_TIME
 
             # Simple Field (unused)
             unused: int = read_buffer.read_unsigned_short(8, logical_name="")
@@ -341,12 +325,6 @@ class DataItem:
             value: bool = _value.get_bool()
             write_buffer.write_bit((value), "value")
 
-        elif data_type == UmasDataType.BOOL:  # List
-            values: PlcList = cast(PlcList, _value)
-            for val in values.get_list():
-                value: bool = val.get_bool()
-                write_buffer.write_bit((value), "value")
-
         elif data_type == UmasDataType.EBOOL and number_of_values == int(1):  # BOOL
             # Reserved Field
             write_buffer.write_byte(int(0x0000), 7, "int0x0000")
@@ -354,22 +332,16 @@ class DataItem:
             value: bool = _value.get_bool()
             write_buffer.write_bit((value), "value")
 
-        elif data_type == UmasDataType.EBOOL:  # List
-            values: PlcList = cast(PlcList, _value)
-            for val in values.get_list():
-                value: bool = val.get_bool()
-                write_buffer.write_bit((value), "value")
-
         elif data_type == UmasDataType.BYTE and number_of_values == int(1):  # BYTE
             # Simple Field (value)
             value: int = _value.get_int()
-            write_buffer.write_byte((value), "value")
+            write_buffer.write_byte((value), 8, "value")
 
         elif data_type == UmasDataType.BYTE:  # List
             values: PlcList = cast(PlcList, _value)
             for val in values.get_list():
                 value: List[int] = val.get_raw()
-                write_buffer.write_byte_array("", value)
+                write_buffer.write_byte(value, 8, "")
 
         elif data_type == UmasDataType.WORD:  # WORD
             # Simple Field (value)
@@ -438,7 +410,10 @@ class DataItem:
 
         elif data_type == UmasDataType.STRING and number_of_values == int(1):  # STRING
             # Manual Field (value)
-            serialize_terminated_string(write_buffer, self.value, self.number_of_values)
+            value: PlcValue = _value
+            StaticHelper.serialize_terminated_string(
+                write_buffer, value, number_of_values
+            )
         elif data_type == UmasDataType.STRING:  # List
             values: PlcList = cast(PlcList, _value)
             for val in values.get_list():
@@ -482,7 +457,7 @@ class DataItem:
                 value: int = val.get_int()
                 write_buffer.write_unsigned_int((value), 32, "value")
 
-        elif data_type == UmasDataType.DT and number_of_values == int(
+        elif data_type == UmasDataType.DATE_AND_TIME and number_of_values == int(
             1
         ):  # DATE_AND_TIME
             # Simple Field (unused)
@@ -534,17 +509,11 @@ class DataItem:
             size_in_bits += 7
             # Simple Field (value)
             size_in_bits += 1
-        elif data_type == UmasDataType.BOOL:  # List
-            values: PlcList = cast(PlcList, _value)
-            size_in_bits += len(values.get_list()) * 1
         elif data_type == UmasDataType.EBOOL and number_of_values == int(1):  # BOOL
             # Reserved Field
             size_in_bits += 7
             # Simple Field (value)
             size_in_bits += 1
-        elif data_type == UmasDataType.EBOOL:  # List
-            values: PlcList = cast(PlcList, _value)
-            size_in_bits += len(values.get_list()) * 1
         elif data_type == UmasDataType.BYTE and number_of_values == int(1):  # BYTE
             # Simple Field (value)
             size_in_bits += 8
@@ -589,7 +558,7 @@ class DataItem:
             size_in_bits += len(values.get_list()) * 32
         elif data_type == UmasDataType.STRING and number_of_values == int(1):  # STRING
             # Manual Field (value)
-            size_in_bits += self.number_of_values * int(8)
+            size_in_bits += number_of_values * int(8)
         elif data_type == UmasDataType.STRING:  # List
             values: PlcList = cast(PlcList, _value)
             size_in_bits += len(values.get_list()) * 32
@@ -614,7 +583,7 @@ class DataItem:
         elif data_type == UmasDataType.TOD:  # List
             values: PlcList = cast(PlcList, _value)
             size_in_bits += len(values.get_list()) * 32
-        elif data_type == UmasDataType.DT and number_of_values == int(
+        elif data_type == UmasDataType.DATE_AND_TIME and number_of_values == int(
             1
         ):  # DATE_AND_TIME
             # Simple Field (unused)
