@@ -53,7 +53,8 @@
                   <targetPath>.</targetPath>
                   <directory>${project.basedir}/../../../../../plc4py/</directory>
                   <includes>
-                    <include>setup.*</include>
+                    <include>setup.cfg</include>
+                    <include>pyproject.toml</include>
                   </includes>
                   <filtering>true</filtering>
                 </resource>
