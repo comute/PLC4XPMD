@@ -1,0 +1,7 @@
+* xref:index.adoc[Apache]
+** https://www.apache.org/[Apache Software Foundation]
+** https://www.apache.org/foundation/how-it-works.html[How Apache Works]
+** https://www.apache.org/licenses/[License]
+** https://www.apache.org/foundation/marks/pmcs.html#navigation[Privacy Policy]
+** https://www.apache.org/foundation/sponsorship.html[Sponsor Apache]
+** https://www.apache.org/foundation/thanks.html[Thanks]

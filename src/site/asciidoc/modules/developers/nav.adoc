@@ -1,0 +1,41 @@
+* xref:index.adoc[Developers]
+
+** xref:preparing/index.adoc[]
+*** xref:preparing/linux.adoc[]
+*** xref:preparing/macos.adoc[]
+*** xref:preparing/windows.adoc[]
+
+** xref:building.adoc[]
+
+** xref:contributing.adoc[]
+
+** xref:tutorials/index.adoc[]
+*** xref:tutorials/writing-driver.adoc[]
+*** xref:tutorials/testing-serializers-and-parsers.adoc[]
+
+** xref:code-gen/index.adoc[]
+*** xref:code-gen/protocol/mspec.adoc[]
+*** xref:code-gen/language/freemarker.adoc[]
+*** xref:code-gen/protocol/df1.adoc[]
+
+** xref:protocols/index.adoc[]
+*** xref:protocols/ads/protocol.adoc[]
+*** xref:protocols/eip/protocol.adoc[]
+
+** xref:infrastructure/index.adoc[]
+*** xref:infrastructure/ci.adoc[]
+*** xref:infrastructure/issues.adoc[]
+*** xref:infrastructure/sonar.adoc[]
+*** xref:infrastructure/wiki.adoc[]
+*** xref:infrastructure/vm.adoc[]
+*** xref:infrastructure/website.adoc[]
+
+** xref:release/index.adoc[]
+*** xref:release/release.adoc[]
+*** xref:release/validation.adoc[]
+*** xref:release/build-tools.adoc[]
+
+** xref:tools.adoc[]
+** xref:team.adoc[]
+** xref:decisions.adoc[]
+** xref:maturity.adoc[]

@@ -1,0 +1,20 @@
+site:
+  title: PLC4X
+content:
+  sources:   
+  - url: ../..
+    branches: HEAD
+    start_path: src/site/asciidoc
+ui: 
+  bundle:
+    url: https://gitlab.com/antora/antora-ui-default/-/jobs/artifacts/HEAD/raw/build/ui-bundle.zip?job=bundle-stable
+    snapshot: true
+  supplemental_files: resources
+antora:
+  extensions:
+  - '@antora/lunr-extension'
+asciidoc:
+  extensions:
+  - asciidoctor-plantuml
+  attributes:
+    plantuml-server-url: 'http://www.plantuml.com/plantuml'
