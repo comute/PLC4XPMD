@@ -235,7 +235,8 @@ public class S7HMuxImpl extends MessageToMessageCodec<ByteBuf, ByteBuf> implemen
             embededChannel.pipeline().fireUserEventTriggered(new DisconnectedEvent());
         }
 
-        logger.info(embedCtx.executor().toString());
+        if (embed_ctx != null)
+            logger.info(embedCtx.executor().toString());
 
         if ((tcpChannel == primaryChannel) &&
             (primaryChannel == ctx.channel()))
