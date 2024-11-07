@@ -172,6 +172,7 @@
   <modules>
     <!-- Definition of the protocol message formats -->
     <module>protocols</module>
+    <module>src</module>
   </modules>
 
   <dependencyManagement>
@@ -984,7 +985,7 @@
             <id>copy-site-resources</id>
             <!-- Only execute this for the parent module -->
             <inherited>false</inherited>
-            <phase>pre-site</phase>
+            <phase>site</phase>
             <goals>
               <goal>copy-resources</goal>
             </goals>
@@ -992,32 +993,9 @@
               <outputDirectory>${project.build.directory}/site</outputDirectory>
               <resources>
                 <resource>
-                  <directory>${project.basedir}/src/site/resources-filtered</directory>
-                  <filtering>true</filtering>
+                  <directory>${project.basedir}/src/site/target/site</directory>
+                  <filtering>false</filtering>
                   <targetPath>${project.build.directory}/site</targetPath>
-                </resource>
-              </resources>
-            </configuration>
-          </execution>
-          <!--
-            Copy the schemas that might be distributed throughout the codebase to a central "schemas"
-            directory so IDEs can automatically pull them in.
-          -->
-          <execution>
-            <id>copy-schemas</id>
-            <!-- Only execute this for the parent module -->
-            <inherited>false</inherited>
-            <phase>pre-site</phase>
-            <goals>
-              <goal>copy-resources</goal>
-            </goals>
-            <configuration>
-              <outputDirectory>${project.build.directory}/site</outputDirectory>
-              <resources>
-                <!-- Copy the resources for the test-suites -->
-                <resource>
-                  <directory>${project.basedir}/plc4j/utils/test-utils/src/main/resources/schemas</directory>
-                  <targetPath>${project.build.directory}/site/schemas</targetPath>
                 </resource>
               </resources>
             </configuration>
@@ -1266,48 +1244,17 @@
             generating output.
           -->
           <version>3.12.1</version>
+
           <configuration>
             <!--templateFile>${session.executionRootDirectory}/src/site/template/site.vm</templateFile-->
             <generateReports>false</generateReports>
-            <generateSitemap>true</generateSitemap>
+            <generateSitemap>false</generateSitemap>
             <relativizeDecorationLinks>false</relativizeDecorationLinks>
             <locales>en</locales>
             <inputEncoding>${project.build.sourceEncoding}</inputEncoding>
             <outputEncoding>${project.reporting.outputEncoding}</outputEncoding>
-            <!--
-              IntelliJ can't find the asciidoc config option in the site plugin, which is correct.
-              However, this config section is used by the asciidoctor site plugin extension. So please
-              ignore this error, it's actually ok.
-            -->
-            <asciidoc>
-              <attributes>
-                <source-highlighter>prettify</source-highlighter>
-                <imagesoutdir>${project.build.directory}/site/images</imagesoutdir>
-                <pom-adoc>${project.build.directory}/pom.adoc</pom-adoc>
-              </attributes>
-              <requires>
-                <require>asciidoctor-diagram</require>
-              </requires>
-            </asciidoc>
+
           </configuration>
-          <dependencies>
-            <!-- Add support for asciidoctor -->
-            <dependency>
-              <groupId>org.asciidoctor</groupId>
-              <artifactId>asciidoctor-maven-plugin</artifactId>
-              <version>${asciidoctor.maven.plugin.version}</version>
-            </dependency>
-            <dependency>
-              <groupId>org.asciidoctor</groupId>
-              <artifactId>asciidoctorj</artifactId>
-              <version>${asciidoctorj.version}</version>
-            </dependency>
-            <dependency>
-              <groupId>org.asciidoctor</groupId>
-              <artifactId>asciidoctorj-diagram</artifactId>
-              <version>${asciidoctorj.diagram.version}</version>
-            </dependency>
-          </dependencies>
         </plugin>
 
         <plugin>

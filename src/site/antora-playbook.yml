@@ -2,9 +2,9 @@ site:
   title: PLC4X
 content:
   sources:   
-  - url: ../..
+  - url: ../../..
     branches: HEAD
-    start_path: src/site/asciidoc
+    start_path: src/site/target/asciidoc
 ui: 
   bundle:
     url: https://gitlab.com/antora/antora-ui-default/-/jobs/artifacts/HEAD/raw/build/ui-bundle.zip?job=bundle-stable
@@ -18,3 +18,5 @@ asciidoc:
   - asciidoctor-plantuml
   attributes:
     plantuml-server-url: 'http://www.plantuml.com/plantuml'
+output:
+  dir: ./target/site
