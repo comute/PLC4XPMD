@@ -20,6 +20,7 @@ package org.apache.plc4x.java.s7.readwrite.protocol;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.Channel;
+import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandler.Sharable;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.embedded.EmbeddedChannel;
@@ -130,9 +131,8 @@ public class S7HMuxImpl extends MessageToMessageCodec<ByteBuf, ByteBuf> implemen
         if ((embedCtx == null) && (ctx.channel() instanceof EmbeddedChannel)) embedCtx = ctx;
         if ((tcpChannel != null) && (embedCtx == ctx)) {
             tcpChannel.writeAndFlush(outBB.copy());
-        } else {
-            list.add(outBB.copy());
         }
+        list.add(outBB.copy());
     }
 
     /*
@@ -175,9 +175,14 @@ public class S7HMuxImpl extends MessageToMessageCodec<ByteBuf, ByteBuf> implemen
     public void userEventTriggered(ChannelHandlerContext ctx, Object evt) throws Exception {
         super.userEventTriggered(ctx, evt);
         logger.info(LocalTime.now() + " userEventTriggered: " + ctx.name() + " Event: " + evt);
+
         if (evt instanceof ConnectedEvent) {
             try {
-                tcpChannel.pipeline().remove("watchdog");
+                ChannelHandler watchdog = tcpChannel.pipeline().get("watchdog");
+                if (watchdog != null) {
+                    tcpChannel.pipeline().remove(watchdog);
+                }
+
             } catch (Exception ex) {
                 logger.info(ex.toString());
             }
@@ -199,7 +204,6 @@ public class S7HMuxImpl extends MessageToMessageCodec<ByteBuf, ByteBuf> implemen
         if (evt instanceof DisconnectEvent) {
             logger.info("DisconnectEvent");
         }
-
     }
 
     @Override
@@ -250,7 +254,6 @@ public class S7HMuxImpl extends MessageToMessageCodec<ByteBuf, ByteBuf> implemen
                         embededChannel.pipeline().fireUserEventTriggered(new ConnectEvent());
                     }
                 }
-        ;
 
 
         if ((tcpChannel == secondaryChannel) &&
@@ -265,9 +268,7 @@ public class S7HMuxImpl extends MessageToMessageCodec<ByteBuf, ByteBuf> implemen
                         embededChannel.pipeline().fireUserEventTriggered(new ConnectEvent());
                     }
                 }
-
     }
-
 
     @Override
     public void setEmbededhannel(Channel embeded_channel, PlcConnectionConfiguration configuration) {
@@ -350,6 +351,5 @@ public class S7HMuxImpl extends MessageToMessageCodec<ByteBuf, ByteBuf> implemen
     public Channel getTCPChannel() {
         return tcpChannel;
     }
-
 
 }
