@@ -172,7 +172,7 @@
   <modules>
     <!-- Definition of the protocol message formats -->
     <module>protocols</module>
-    <module>src</module>
+    <module>website</module>
   </modules>
 
   <dependencyManagement>
@@ -645,7 +645,7 @@
             </goals>
             <inherited>false</inherited>
             <configuration>
-              <source>${project.basedir}/src/main/script/prerequisiteCheck.groovy</source>
+              <source>${project.basedir}/website/main/script/prerequisiteCheck.groovy</source>
             </configuration>
           </execution>
           <!--
@@ -659,7 +659,7 @@
               <goal>execute</goal>
             </goals>
             <configuration>
-              <source>${project.basedir}/src/main/script/preSiteGeneration.groovy</source>
+              <source>${project.basedir}/website/main/script/preSiteGeneration.groovy</source>
             </configuration>
           </execution>
         </executions>
@@ -1644,7 +1644,7 @@
             Please don't change "target" to "${project.build.directory}" as profile-activation happens before
             property resolution ... it won't work with a property.
           -->
-          <exists>src/main/generated/</exists>
+          <exists>website/main/generated/</exists>
         </file>
       </activation>
       <build>
@@ -1661,7 +1661,7 @@
                 </goals>
                 <configuration>
                   <sources>
-                    <source>${project.basedir}/src/main/generated/</source>
+                    <source>${project.basedir}/website/main/generated/</source>
                   </sources>
                 </configuration>
               </execution>

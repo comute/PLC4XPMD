@@ -2,9 +2,9 @@ site:
   title: PLC4X
 content:
   sources:   
-  - url: ../../..
+  - url: ../..
     branches: HEAD
-    start_path: src/site/target/asciidoc
+    start_path: website/target/asciidoc
 ui: 
   bundle:
     url: https://gitlab.com/antora/antora-ui-default/-/jobs/artifacts/HEAD/raw/build/ui-bundle.zip?job=bundle-stable
