@@ -17,6 +17,8 @@
 
 = Conferences & Events
 
+include::partial$pom.adoc[]
+
 On this page we are listing options to attend talks and events around PLC4X.
 
 [width="100%",cols="2,^2,2,^2,^3",options="header"]

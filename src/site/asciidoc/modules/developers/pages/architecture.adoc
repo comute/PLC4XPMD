@@ -19,6 +19,8 @@
 
 == Simple case
 
+include::partial$pom.adoc[]
+
 In this simple case, an application asks the DriverManager to forward a connection creation to the corresponding Driver implementation, which then creates both a Connection and a MessageCodec instance. The Connection is the logical link between the connection state and the MessageCodec.
 A MessageCodec uses a TransportInstance to communicate with the target device.
 

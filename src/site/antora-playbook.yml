@@ -9,14 +9,14 @@ ui:
   bundle:
     url: https://gitlab.com/antora/antora-ui-default/-/jobs/artifacts/HEAD/raw/build/ui-bundle.zip?job=bundle-stable
     snapshot: true
-  supplemental_files: resources
+  supplemental_files: supplemental
 antora:
   extensions:
   - '@antora/lunr-extension'
 asciidoc:
   extensions:
-  - asciidoctor-plantuml
+  - asciidoctor-kroki
   attributes:
-    plantuml-server-url: 'http://www.plantuml.com/plantuml'
+    allow-uri-read: 'true'
 output:
   dir: ./target/site

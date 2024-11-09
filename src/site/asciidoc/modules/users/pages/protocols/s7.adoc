@@ -22,7 +22,10 @@
 //:coderay-css: class
 
 = S7 (Step7)
-image::s7_banner.png[banner,512,167]
+
+image::users/protocols/s7_banner.png[banner,512,167]
+
+include::partial$pom.adoc[]
 
 == Executive Summary
 

@@ -21,6 +21,10 @@
 
 image::users/protocols/bacnet_banner.png[banner,512,167]
 
+include::partial$pom.adoc[]
+
+
+
 == BACnet (Building Automation and Control Networks)
 
 == Connection String Options

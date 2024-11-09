@@ -18,7 +18,12 @@
 :icons: font
 
 = ADS (Automation Device Specification)
-image::ads_banner.png[banner,512,167]
+
+image::users/protocols/ads_banner.png[banner,512,167]
+
+include::partial$pom.adoc[]
+
+
 
 The ADS (automation device specification) describes a device-independent and fieldbus independent interface for communication between Beckhoff automation devices running TwinCAT and other devices implementing this interface. https://www.home-assistant.io/integrations/ads/ Source (accessed 7 August 2022)
 

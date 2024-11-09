@@ -19,6 +19,8 @@
 
 = PLC4X (Proxy) (TCP)
 
+include::partial$pom.adoc[]
+
 == Connection String Options
 
 include::partial$plc4x.adoc[]

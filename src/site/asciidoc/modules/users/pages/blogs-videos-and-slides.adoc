@@ -17,6 +17,8 @@
 
 = Blogs, Videos and Slides on Apache PLC4X
 
+include::partial$pom.adoc[]
+
 == Blog posts
 
 - https://medium.com/@megachucky/apache-kafka-ksql-and-apache-plc4x-for-iiot-data-integration-and-processing-472c2de6700b[Apache Kafka, KSQL and Apache PLC4X for IIoT Data Integration and Processing]

@@ -19,6 +19,8 @@
 
 = Commercial support offerings for Apache PLC4X
 
+include::partial$pom.adoc[]
+
 image::users/toddy-loves-apache.png[width=200,float=left]
 
 As every Apache project, so is `Apache PLC4X` generally available and usable by anyone free of charge.

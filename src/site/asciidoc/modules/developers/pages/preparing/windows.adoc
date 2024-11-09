@@ -17,6 +17,8 @@
 
 = Windows
 
+include::partial$pom.adoc[]
+
 As tracking down issues which result from missing or outdated third party tools such as compilers are always hard do diagnose, we have extended the build of PLC4X with a `prerequisiteCheck` that automatically checks if required tools are installed and if a required minimum version is available.
 
 If any of the prerequisites are not met, the build fails with an error message that will help finding out what's wrong.

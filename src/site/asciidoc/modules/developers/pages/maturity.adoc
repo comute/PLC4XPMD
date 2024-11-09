@@ -19,6 +19,8 @@
 
 = Apache Maturity Model Assessment for PLC4X
 
+include::partial$pom.adoc[]
+
 == Overview
 
 This is an assessment of the PLC4X project's maturity, meant to help inform the decision (of the mentors, community, Incubator PMC and ASF Board of Directors) to graduate it as a top-level Apache project.

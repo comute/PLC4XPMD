@@ -19,6 +19,8 @@
 
 = OPC UA
 
+include::partial$pom.adoc[]
+
 == Connection String Options
 
 include::partial$opcua.adoc[]

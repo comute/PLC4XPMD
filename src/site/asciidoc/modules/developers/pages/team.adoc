@@ -19,6 +19,8 @@
 
 = Team
 
+include::partial$pom.adoc[]
+
 Sorted by first name:
 
 [width="100%",cols="2,4,1,1",options="header"]

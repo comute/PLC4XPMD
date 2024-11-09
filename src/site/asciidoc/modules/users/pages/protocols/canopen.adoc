@@ -18,7 +18,12 @@
 :icons: font
 
 = CANopen
-image::can_banner.png[banner,512,167]
+
+image::users/protocols/can_banner.png[banner,512,167]
+
+include::partial$pom.adoc[]
+
+
 
 == CAN in Automation
 

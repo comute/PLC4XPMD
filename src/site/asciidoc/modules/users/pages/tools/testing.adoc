@@ -17,6 +17,8 @@
 
 = Testing (or using PLC4X without a PLC)
 
+include::partial$pom.adoc[]
+
 == The Mock Driver
 
 PLC4X has a _Mock Driver_ which was initially implemented to be used for Unit Tests and this still is its main purpose.

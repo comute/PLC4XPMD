@@ -19,6 +19,8 @@
 
 = UMAS (Schneider Electric PLCs)
 
+include::partial$pom.adoc[]
+
 (Supported by Plc4Py Only)
 
 == Connection String Options

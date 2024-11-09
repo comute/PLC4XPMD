@@ -17,6 +17,7 @@
 
 = Object PLC Mapping
 
+include::partial$pom.adoc[]
 
 == What is Object PLC Mapping
 

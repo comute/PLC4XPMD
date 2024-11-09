@@ -17,6 +17,8 @@
 
 = Industry 4.0 with Apache
 
+include::partial$pom.adoc[]
+
 Since the introduction of programmable logic controllers in the production industry in the early 80s, they have been the core of almost every piece of production machinery.
 
 While first PLCs were usually stand-alone controllers.

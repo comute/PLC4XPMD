@@ -19,6 +19,8 @@
 
 = OPC UA : Client certificate creation
 
+include::partial$pom.adoc[]
+
 Below tutorial will teach you how to create client certificate for use within production environments.
 This tutorial focuses on preparation of configuration.
 It does not dive in X.509 and PKI details nor specifics of any OPC-UA server.

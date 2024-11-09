@@ -21,6 +21,8 @@
 
 image::users/protocols/can_banner.png[banner,512,167]
 
+include::partial$pom.adoc[]
+
 The CAN Bus driver is a special kind of driver which does not bring any logic.
 Its responsibility is to combine link:../transports/can.html[CAN transport facade] and custom application layer protocols.
 In this way, the protocol can use its own "root frame" type which is not delivered from CAN bus frame.

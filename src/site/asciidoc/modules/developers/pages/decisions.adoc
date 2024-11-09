@@ -18,6 +18,8 @@
 
 = Decision Making
 
+include::partial$pom.adoc[]
+
 == Introduction
 
 This document describes the roles and responsibilities of the project, who may vote, how voting works, how conflicts are resolved, etc.

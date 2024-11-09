@@ -18,6 +18,8 @@
 
 = Continuous Integration
 
+include::partial$pom.adoc[]
+
 We are currently using the following CI systems.
 
 - Apache's Jenkins at: https://ci-builds.apache.org/job/PLC4X/

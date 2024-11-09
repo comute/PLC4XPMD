@@ -17,6 +17,8 @@
 
 = Getting Started with Python
 
+include::partial$pom.adoc[]
+
 == Using the PLC4PY API directly
 
 Currently, you need to install PLC4Py from the GitHub repository instead of pypi.

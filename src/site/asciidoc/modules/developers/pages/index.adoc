@@ -19,6 +19,8 @@
 
 = Developer Section
 
+include::partial$pom.adoc[]
+
 This part of the Apache PLC4X dedicated to provide information to people wanting to build PLC4X and hopefully also start contributing to this awesome project.
 
 == Getting Started

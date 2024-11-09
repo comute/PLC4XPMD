@@ -18,3 +18,5 @@
 :icons: font
 
 = Tutorials
+
+include::partial$pom.adoc[]

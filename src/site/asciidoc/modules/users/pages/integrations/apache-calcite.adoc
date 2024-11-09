@@ -19,6 +19,8 @@
 
 = Apache Calcite
 
+include::partial$pom.adoc[]
+
 https://calcite.apache.org/[Apache Calcite]
 Standard SQL
 Industry-standard SQL parser, validator and JDBC driver.

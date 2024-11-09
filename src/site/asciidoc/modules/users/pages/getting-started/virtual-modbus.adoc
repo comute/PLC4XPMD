@@ -16,7 +16,9 @@
 //
 :imagesdir: ../../images/
 
-= Playing around with Apache PLC4X with a virtual Modbus PLC
+= Virtual Modbus PLC
+
+include::partial$pom.adoc[]
 
 If you want to get started with Apache PLC4X, but don't have any PLC at hand, this tutorial will demonstrate how you can use a virtual `Modbus Slave` software to simulate communication with `Modbus` enabled PLCs.
 

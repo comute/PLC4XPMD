@@ -19,6 +19,8 @@
 
 = Modbus (TCP/UDP/Serial)
 
+include::partial$pom.adoc[]
+
 == Connection String Options
 
 === Modbus TCP

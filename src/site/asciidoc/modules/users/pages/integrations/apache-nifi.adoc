@@ -19,6 +19,8 @@
 
 = Apache NiFi
 
+include::partial$pom.adoc[]
+
 Apache NiFi allows creating systems that process data around the concept of data-streams.
 
 Apache PLC4X provides both `Source` as well as `Sink` processors for accessing data in PLCs or writing data to them.

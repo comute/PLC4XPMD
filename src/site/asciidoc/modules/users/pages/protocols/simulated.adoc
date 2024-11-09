@@ -19,6 +19,8 @@
 
 = Simulated
 
+include::partial$pom.adoc[]
+
 == Connection String Options
 
 include::partial$simulated.adoc[]

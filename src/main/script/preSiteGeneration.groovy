@@ -77,7 +77,7 @@ if (codeGenMatch.count >= 1) {
 }
 
 // Get the latest released version from our doap file.
-def plc4xDoapFile = new File(project.getBasedir(), "src/site/resources-filtered/plc4x-doap.rdf")
+def plc4xDoapFile = new File(project.getBasedir(), "src/site/resources/plc4x-doap.rdf")
 if (plc4xDoapFile.exists()) {
     def doapDocument = new XmlSlurper().parse(plc4xDoapFile)
     def lastReleasedVersion = doapDocument.Project.release[0].Version.revision
@@ -88,7 +88,7 @@ print "\n"
 
 // Dump all maven properties into a file readable by asciidoc.
 print "\nGenerating 'pom.adoc' file in target directory (Use in adoc by including 'include::{pom-adoc} ... however this should not be required)'\n\n"
-def propertyFile = new File(project.getBasedir(), "target/pom.adoc")
+def propertyFile = new File(project.getBasedir(), "src/site/target/keys/pom.adoc")
 // Ensure the parent directory is created
 propertyFile.getParentFile().mkdirs()
 // Make sure the file is deleted so we don't append to an existing file

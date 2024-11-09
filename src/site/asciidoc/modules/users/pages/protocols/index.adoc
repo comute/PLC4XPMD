@@ -14,9 +14,11 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 //
+:icons: font
 
 = Current language support for protocols
-:icons: font
+
+include::partial$pom.adoc[]
 
 |===
 |Protocol | C | C# | Go | Java | Python
@@ -110,7 +112,7 @@
 |icon:times[role="red"]
 |icon:check[role="green"]
 |icon:check[role="green"]
-|icon:exclamation[role="yellow"]
+|icon:check[role="green"]
 
 |OPC-UA
 |icon:times[role="red"]
@@ -171,11 +173,10 @@
 - icon:check[role="red"] Not implemented yet
 - icon:question[role="red"] Unsure
 
-= Features
-:icons: font
-
 |===
 
+== Features
+:icons: font
 The following table contains a list of operations and the protocols that support them:
 
 |===
@@ -392,11 +393,11 @@ The following table contains a list of operations and the protocols that support
 
 |UMAS
 |icon:question[role="red"]
-|icon:question[role="red"]
 |icon:check[role="green"]
 |icon:check[role="green"]
 |icon:check[role="green"]
-|icon:question[role="red"]
+|icon:check[role="green"]
+|icon:check[role="green"]
 |icon:question[role="red"]
 |icon:question[role="red"]
 |icon:question[role="red"]

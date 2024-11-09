@@ -17,3 +17,4 @@
 
 = Preparing Issues & Bug Reports
 
+include::partial$pom.adoc[]

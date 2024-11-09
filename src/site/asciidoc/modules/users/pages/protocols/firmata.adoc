@@ -19,6 +19,8 @@
 
 = Firmata
 
+include::partial$pom.adoc[]
+
 The Firmata protocol is based on the MIDI protocol used for communicating with musical equipment.
 
 It is also one of the most widely used protocols for communication with Arduino devices.

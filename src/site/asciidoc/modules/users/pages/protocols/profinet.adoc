@@ -19,6 +19,8 @@
 
 = Profinet (In Development)
 
+include::partial$pom.adoc[]
+
 The PROFINET driver implements a class 3 real time controller. Which is able to communicate with multiple devices
 on the same network segment.
 

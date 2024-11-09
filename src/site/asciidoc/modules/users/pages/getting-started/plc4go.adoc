@@ -17,6 +17,8 @@
 
 = Getting Started with Go
 
+include::partial$pom.adoc[]
+
 == Initializing a dummy project
 
 Just in case you want to get started with `Go`. In this part we'll setup a new `Go` project.

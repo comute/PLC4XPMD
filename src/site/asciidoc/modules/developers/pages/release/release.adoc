@@ -19,6 +19,8 @@
 
 = Releasing PLC4X
 
+include::partial$pom.adoc[]
+
 == TL/DR
 
 IMPORTANT: Please be sure to execute the release with a Java version 11 or the Karaf feature tests will not run.

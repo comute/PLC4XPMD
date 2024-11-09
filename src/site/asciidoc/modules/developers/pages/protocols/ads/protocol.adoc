@@ -16,6 +16,9 @@
 //
 
 = Beckhoff ADS Protocol
+:page-role: home
+
+include::partial$pom.adoc[]
 
 // https://plantuml.com/de/activity-diagram-legacy
 // https://deepu.js.org/svg-seq-diagram/Reference_Guide.pdf
@@ -23,6 +26,9 @@
 [plantuml,ads-statemachine,svg,opts="inline",svg-type="inline"]
 ----
 @startuml
+
+scale 792 width
+
 
 (*) --> Connect
 

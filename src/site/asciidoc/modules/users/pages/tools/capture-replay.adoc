@@ -17,7 +17,9 @@
 
 = Capture Replay
 
-Some times the problem with industry protocols is, that the most interesting protocols live in places that are not very welcoming to IT folks.
+include::partial$pom.adoc[]
+
+Sometimes the problem with industry protocols is, that the most interesting protocols live in places that are not very welcoming to IT folks.
 
 Either too hot or too cold and usually no good coffee around.
 

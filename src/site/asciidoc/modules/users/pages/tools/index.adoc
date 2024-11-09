@@ -18,3 +18,5 @@
 :icons: font
 
 = Tools
+
+include::partial$pom.adoc[]

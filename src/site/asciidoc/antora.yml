@@ -1,5 +1,5 @@
 name: plc4x
-version: ~
+version: 'latest'
 prerelease: True
 title: PLC4X
 nav:

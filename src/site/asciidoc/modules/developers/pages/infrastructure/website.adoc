@@ -17,6 +17,8 @@
 
 = Generating the Website
 
+include::partial$pom.adoc[]
+
 We are currently using the normal `Maven` build to not only generate the project artifacts, but also the projects website.
 
 In order to provide content, every module can have a `src/site` directory. This content will be generated to that modules site-part.

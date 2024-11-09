@@ -19,6 +19,8 @@
 
 = Generic CAN
 
+include::partial$pom.adoc[]
+
 == CAN Bus semantics
 
 This driver is a generic purpose driver.

@@ -17,6 +17,8 @@
 
 = Getting Started with Java
 
+include::partial$pom.adoc[]
+
 == Using the PLC4J API directly
 
 In order to write a valid PLC4X Java application, all you need, is to add a dependency to the `api module`.

@@ -19,4 +19,6 @@
 
 = Infrastructure
 
+include::partial$pom.adoc[]
+
 In this section you can find information on the services the Apache PLC4X project makes use of.

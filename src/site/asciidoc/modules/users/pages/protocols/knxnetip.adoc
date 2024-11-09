@@ -18,7 +18,12 @@
 :icons: font
 
 = KNXnet/IP
-image::knx_banner.png[banner,512,167]
+
+image::users/protocols/knx_banner.png[banner,512,167]
+
+include::partial$pom.adoc[]
+
+
 
 == Connection String Options
 

@@ -19,6 +19,8 @@
 
 = Validating a staged release
 
+include::partial$pom.adoc[]
+
 TIP: On MacOS and Linux the first 4 steps can be automated. For details please read the section about tooling after this chapter.
 
 [%interactive]

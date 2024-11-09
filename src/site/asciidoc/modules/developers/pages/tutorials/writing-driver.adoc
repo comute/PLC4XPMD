@@ -18,6 +18,8 @@
 
 = Basic Building Blocs of a Driver / Protocol
 
+include::partial$pom.adoc[]
+
 The general pipeline for a Protocol looks like the following:
 
 [ditaa,driver-anatomy]

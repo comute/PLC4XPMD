@@ -17,6 +17,8 @@
 
 = Getting Started
 
+include::partial$pom.adoc[]
+
 Depending on the programming language, the usage will differ, therefore please go to the `Getting Started` version of the language of choice.
 
 == Go/Golang

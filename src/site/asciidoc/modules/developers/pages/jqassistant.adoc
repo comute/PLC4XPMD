@@ -18,6 +18,8 @@
 
 = Using JQAssistant
 
+include::partial$pom.adoc[]
+
 In PLC4X we are using a tool called `https://jqassistant.org/[JQAssistant]` for enforcing quality assurance rules.
 
 `JQAssistant` can be thought of as a set of two components:

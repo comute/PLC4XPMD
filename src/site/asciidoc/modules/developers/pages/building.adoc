@@ -17,6 +17,8 @@
 
 = Building PLC4X
 
+include::partial$pom.adoc[]
+
 PLC4X is built with `Apache Maven` and we have tried to make the build as simple as possible.
 
 However PLC4X aims at providing means to communicate with PLCs of multiple vendors using a shared API but also in a variety of different languages.

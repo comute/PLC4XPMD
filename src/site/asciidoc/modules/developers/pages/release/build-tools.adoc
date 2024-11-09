@@ -19,6 +19,8 @@
 
 = Releasing PLC4X Build-Tools
 
+include::partial$pom.adoc[]
+
 In contrast to the main project, the `plc4x-build-tools` repository contains a loose collection of sub-projects.
 
 The main `pom.xml` in the root directory is mainly for allowing to import all modules into an IDE and shouldn't be used for releases.
