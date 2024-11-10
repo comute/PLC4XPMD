@@ -107,8 +107,8 @@
     <awaitility.version>4.2.2</awaitility.version>
     <!-- The currently available version is 2.0.5 and anything above 1.4.3 is no longer compatible with our code -->
     <bit-io.version>1.4.3</bit-io.version>
-    <bouncycastle.version>1.78.1</bouncycastle.version>
-    <byte-buddy.version>1.15.3</byte-buddy.version>
+    <bouncycastle.version>1.79</bouncycastle.version>
+    <byte-buddy.version>1.15.10</byte-buddy.version>
     <cmake.version>3.30.2-b1</cmake.version>
     <commons-beanutils.version>1.9.4</commons-beanutils.version>
     <commons-cli.version>1.9.0</commons-cli.version>
@@ -127,12 +127,12 @@
     <equalsverifier.version>3.17.1</equalsverifier.version>
     <!-- It seems freemarker 2.3.32 was the last to support Java 11, 2.3.33 requires Java 16 -->
     <freemarker.version>2.3.32</freemarker.version>
-    <groovy.version>4.0.23</groovy.version>
+    <groovy.version>4.0.24</groovy.version>
     <guava.version>33.3.1-jre</guava.version>
     <hamcrest.version>3.0</hamcrest.version>
     <httpclient.version>4.5.14</httpclient.version>
     <httpcore.version>4.4.16</httpcore.version>
-    <jackson.version>2.18.0</jackson.version>
+    <jackson.version>2.18.1</jackson.version>
     <woodstox-core.version>7.0.0</woodstox-core.version>
     <!-- When updating this to the latest version, we're getting errors in the opcua server tests -->
     <jaxb.version>4.0.4</jaxb.version>
@@ -142,7 +142,7 @@
     <jserialcom.version>2.11.0</jserialcom.version>
     <junit.jupiter.version>5.11.3</junit.jupiter.version>
     <junit.platform.version>1.8.2</junit.platform.version>
-    <logback.version>1.5.9</logback.version>
+    <logback.version>1.5.12</logback.version>
     <maven.clean.plugin.version>3.2.0</maven.clean.plugin.version>
     <milo.version>0.6.14</milo.version>
     <mockito.version>5.14.2</mockito.version>
@@ -581,7 +581,7 @@
       <dependency>
         <groupId>com.google.errorprone</groupId>
         <artifactId>error_prone_annotations</artifactId>
-        <version>2.33.0</version>
+        <version>2.35.1</version>
       </dependency>
 
       <dependency>
@@ -1065,7 +1065,7 @@
         <plugin>
           <groupId>com.googlecode.maven-download-plugin</groupId>
           <artifactId>download-maven-plugin</artifactId>
-          <version>1.9.0</version>
+          <version>1.11.2</version>
         </plugin>
 
         <plugin>
@@ -1111,7 +1111,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-surefire-plugin</artifactId>
-          <version>3.5.1</version>
+          <version>3.5.2</version>
           <dependencies>
             <dependency>
               <groupId>org.junit.jupiter</groupId>
@@ -1201,7 +1201,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-project-info-reports-plugin</artifactId>
-          <version>3.7.0</version>
+          <version>3.8.0</version>
         </plugin>
 
         <!-- Configure the Site generation -->
@@ -1259,7 +1259,7 @@
         <plugin>
           <groupId>org.codehaus.mojo</groupId>
           <artifactId>exec-maven-plugin</artifactId>
-          <version>3.4.1</version>
+          <version>3.5.0</version>
         </plugin>
 
         <plugin>
@@ -1300,7 +1300,7 @@
             <dependency>
               <groupId>org.apache.maven.shared</groupId>
               <artifactId>maven-dependency-analyzer</artifactId>
-              <version>1.15.0</version>
+              <version>1.15.1</version>
             </dependency>
           </dependencies>
         </plugin>
