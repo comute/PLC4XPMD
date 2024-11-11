@@ -4,7 +4,6 @@
   },
   "dependencies": {
     "@antora/lunr-extension": "^1.0.0-alpha.8",
-    "asciidoctor-plantuml": "^1.5.0",
     "asciidoctor-kroki": "0.15.4",
     "target": "^0.0.2"
   }
