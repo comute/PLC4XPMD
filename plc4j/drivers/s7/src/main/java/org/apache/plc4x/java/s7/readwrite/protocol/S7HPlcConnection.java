@@ -301,7 +301,7 @@ public class S7HPlcConnection extends DefaultNettyPlcConnection implements Runna
      * The user application must take the measures to make the connection again.
      */
     protected void sendChannelDisconectEvent() {
-        logger.trace("Channels was not created, firing DisconnectEvent Event");
+        logger.trace("Channel was not created, firing DisconnectEvent Event");
         // Send an event to the pipeline telling the Protocol filters what's going on.
         channel.pipeline().fireUserEventTriggered(new DisconnectEvent());
     }
@@ -351,7 +351,7 @@ public class S7HPlcConnection extends DefaultNettyPlcConnection implements Runna
 
             if (primaryChannel != null) {
                 if (!primaryChannel.isActive()) {
-                    logger.info("Creating prymary connection.");
+                    logger.info("Creating primary connection.");
                     primaryChannel.eventLoop().shutdownGracefully();
                     doPrimaryTcpConnections();
                 } else if (null == secondaryChannel) {
@@ -364,7 +364,7 @@ public class S7HPlcConnection extends DefaultNettyPlcConnection implements Runna
                     }
                 }
             } else {
-                logger.info("Creating firts prymary connection.");
+                logger.info("Creating first primary connection.");
                 doPrimaryTcpConnections();
             }
 
@@ -384,7 +384,7 @@ public class S7HPlcConnection extends DefaultNettyPlcConnection implements Runna
                 }
             } else {
                 if (secondaryChannelFactory != null) {
-                    logger.info("Creating firts secondary connection.");
+                    logger.info("Creating first secondary connection.");
                     doSecondaryTcpConnections();
                 }
             }
