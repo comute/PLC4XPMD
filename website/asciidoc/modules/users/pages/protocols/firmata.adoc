@@ -17,7 +17,7 @@
 :imagesdir: ../../images/users/protocols
 :icons: font
 
-== Firmata
+= Firmata
 
 The Firmata protocol is based on the MIDI protocol used for communicating with musical equipment.
 

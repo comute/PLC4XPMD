@@ -17,7 +17,7 @@
 :imagesdir: ../../images/users/protocols
 :icons: font
 
-== EtherNet/IP
+= EtherNet/IP
 
 === Connection String Options
 

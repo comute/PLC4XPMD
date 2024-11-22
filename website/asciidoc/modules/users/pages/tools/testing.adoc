@@ -15,7 +15,7 @@
 //  limitations under the License.
 //
 
-== Testing (or using PLC4X without a PLC)
+= Testing (or using PLC4X without a PLC)
 
 === The Mock Driver
 

@@ -15,7 +15,7 @@
 //  limitations under the License.
 //
 
-== Mac OS
+= Mac OS
 
 Most libraries on Mac are installed using `Homebrew`.
 

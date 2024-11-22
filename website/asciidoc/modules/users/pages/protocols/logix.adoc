@@ -17,7 +17,7 @@
 :imagesdir: ../../images/users/protocols
 :icons: font
 
-== Logix
+= Logix
 
 === Connection String Options
 

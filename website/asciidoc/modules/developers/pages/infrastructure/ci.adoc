@@ -16,7 +16,7 @@
 //
 :imagesdir: ../images/
 
-== Continuous Integration
+= Continuous Integration
 
 We are currently using Apache's `Jenkins` as single CI system.
 

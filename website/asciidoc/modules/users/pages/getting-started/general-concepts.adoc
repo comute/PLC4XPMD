@@ -15,7 +15,7 @@
 //  limitations under the License.
 //
 
-== General Concepts
+= General Concepts
 
 On this page we'll give a short introduction to the most important concepts that will help you understand Apache PLC4X better.
 

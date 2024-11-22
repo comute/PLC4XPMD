@@ -21,7 +21,8 @@
 //:coderay-linenums-mode: inline
 //:coderay-css: class
 
-== S7 (Step7)
+= S7 (Step7)
+
 image::users/protocols/s7_banner.png[banner,512,167]
 
 === Executive Summary
@@ -900,7 +901,7 @@ TODO: Field description
 |SIG_DATA | |
 |SIG_[1...8]_DATA | |
 |SIG_[1...8]_DATA_GOING | |
-|SIG_[1...8]_DATA_CO
+|SIG_[1...8]_DATA_CO | |
 |SIG_[1..8]_DATA_STATUS | |
 |SIG_[1...8]_DATA_SIZE | |
 |SIG_[1...8]_DATA_LENGTH | |

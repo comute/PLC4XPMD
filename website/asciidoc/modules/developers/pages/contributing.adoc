@@ -16,7 +16,7 @@
 //
 :imagesdir: ../images/
 
-== Contributing
+= Contributing
 
 === Forms of contribution
 

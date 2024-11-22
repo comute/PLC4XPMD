@@ -17,8 +17,9 @@
 :imagesdir: ../../images/users/protocols
 :icons: font
 
-== KNXnet/IP
-image::knx_banner.png[banner,512,167]
+= KNXnet/IP
+
+image::users/protocols/knx_banner.png[banner,512,167]
 
 === Connection String Options
 

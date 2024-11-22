@@ -15,7 +15,7 @@
 //  limitations under the License.
 //
 
-== The PLC4X Project VM
+==The PLC4X Project VM
 
 As, especially for the raw socket functionality of PLC4X, our project had higher demands on the infrastructure as other projects.
 Apache Infra kindly provided us with a dedicated VM.

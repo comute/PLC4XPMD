@@ -17,7 +17,7 @@
 :imagesdir: ../../images/
 :icons: font
 
-== Releasing PLC4X Build-Tools
+= Releasing PLC4X Build-Tools
 
 In contrast to the main project, the `plc4x-build-tools` repository contains a loose collection of sub-projects.
 

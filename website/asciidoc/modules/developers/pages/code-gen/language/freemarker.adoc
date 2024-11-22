@@ -16,7 +16,7 @@
 //
 :imagesdir: ../../../images/
 
-== Apache Freemarker
+= Apache Freemarker
 
 For the Freemarker language output we are using an unmodified version of https://freemarker.apache.org[Apache Freemarker] to generate output.
 

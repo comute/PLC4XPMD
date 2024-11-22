@@ -17,7 +17,7 @@
 :imagesdir: ../../images/
 :icons: font
 
-== CAN
+= CAN
 
 A CAN transport is a special category of transport which can bring CAN frame data to various drivers.
 All of these transports are meant to follow basic CAN frame data semantics.

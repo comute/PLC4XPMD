@@ -15,7 +15,7 @@
 //  limitations under the License.
 //
 
-== Industry 4.0 with Apache
+= Industry 4.0 with Apache
 
 Since the introduction of programmable logic controllers in the production industry in the early 80s, they have been the core of almost every piece of production machinery.
 

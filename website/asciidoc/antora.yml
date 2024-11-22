@@ -25,3 +25,6 @@ nav:
 - modules/ROOT/nav.adoc
 - modules/users/nav.adoc
 - modules/developers/nav.adoc
+asciidoc:
+  attributes:
+    current-last-released-version: '0.12'

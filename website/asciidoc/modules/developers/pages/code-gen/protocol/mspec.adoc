@@ -16,7 +16,7 @@
 //
 :imagesdir: ../../../images/
 
-== The MSpec format
+= The MSpec format
 
 The `MSpec` format (Message Specification) was a result of a brainstorming session after evaluating a lot of other options.
 

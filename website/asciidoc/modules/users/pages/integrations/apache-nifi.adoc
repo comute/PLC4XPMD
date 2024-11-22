@@ -17,7 +17,7 @@
 :imagesdir: ../../images/
 :icons: font
 
-== Apache NiFi
+= Apache NiFi
 
 Apache NiFi allows creating systems that process data around the concept of data-streams.
 
@@ -109,7 +109,7 @@ As the `LogMessage` processor creates a stream of events every time a log messag
 Do this by double-clicking on the processor and selecting the `Settings` tab.
 Here check the checkbox labeled `SUCCESS` in the section `Automatically Terminate Relationships` and then click `Apply`.
 
-image::integrations/nifi/configured-log-processors.png[]
+image::integrations/nifi/configured-log-processor.png[]
 
 Now we can connect both processors.
 

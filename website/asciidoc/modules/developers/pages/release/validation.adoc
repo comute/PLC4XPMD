@@ -17,7 +17,7 @@
 :imagesdir: ../images/
 :icons: font
 
-== Validating a staged release
+= Validating a staged release
 
 TIP: On MacOS and Linux the first 4 steps can be automated. For details please read the section about tooling after this chapter.
 

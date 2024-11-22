@@ -15,7 +15,7 @@
 //  limitations under the License.
 //
 
-== Capture Replay
+= Capture Replay
 
 Some times the problem with industry protocols is, that the most interesting protocols live in places that are not very welcoming to IT folks.
 

@@ -16,7 +16,7 @@
 //
 :imagesdir: ../../images/
 
-== Code Generation
+= Code Generation
 
 As hand-writing code for a lot of drivers in multiple languages would be quite a nightmare, we have invested a very large amount of time into finding a way to automate this.
 

@@ -15,7 +15,7 @@
 //  limitations under the License.
 //
 
-== Introduction
+= Introduction
 
 The PLC4X OPC UA server integration is based around the Eclipse Milo OPC UA server. It uses PLC4X to communicate with
 industrial devices effectively acting as a industrial OPC UA gateway.

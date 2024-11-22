@@ -15,7 +15,7 @@
 //  limitations under the License.
 //
 
-== Blogs, Videos and Slides on Apache PLC4X
+= Blogs, Videos and Slides on Apache PLC4X
 
 === Blog posts
 

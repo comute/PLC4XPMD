@@ -17,7 +17,7 @@
 :imagesdir: ../../images/users/protocols
 :icons: font
 
-== C-Bus
+= C-Bus
 
 === Connection String Options
 

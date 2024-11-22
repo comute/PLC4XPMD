@@ -16,7 +16,7 @@
 //
 :imagesdir: ../images/
 
-== Decision Making
+= Decision Making
 
 === Introduction
 

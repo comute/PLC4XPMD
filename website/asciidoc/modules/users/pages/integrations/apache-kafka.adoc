@@ -17,19 +17,19 @@
 :imagesdir: ../../images/
 :icons: font
 
-== https://kafka.apache.org/[Apache Kafka]
+= https://kafka.apache.org/[Apache Kafka]
 
 Apache Kafka is an open-source distributed event streaming platform used by thousands of
 companies for high-performance data pipelines, streaming analytics, data integration, and
 mission-critical applications.
 
-# PLC4X Kafka Connectors
+== PLC4X Kafka Connectors
 
 The PLC4X connectors have the ability to pass data between Kafka and devices using industrial protocols.
 They can be built from source from the latest https://plc4x.apache.org/users/download.html[release] of
 PLC4X or from the latest snapshot from https://github.com/apache/plc4x[github].
 
-## Introduction
+== Introduction
 
 A connect worker is basically a producer or consumer process with a standard api that Kafka can use to manage it. It is
 able to be run in two modes:-
@@ -42,7 +42,7 @@ Kafka brokers.
 In distributed mode the connector runs on the Kafka brokers, which requires you to install the jar file on all of your
 brokers. It allows the worker to be distrubuted across the Kafka brokers to provide redundancy and load balancing.
 
-## Quickstart
+== Quickstart
 
 In order to start a Kafka Connect system the following steps have to be performed:
 
@@ -59,7 +59,7 @@ in the config/connect-distributed.properties file.
 to be resolved from the Kafka Connect server. The easiest way to do this is to add the hostname to your
 hosts file.
 
-### Start a Kafka Broker
+=== Start a Kafka Broker
 
 1) Open 4 console windows and change directory into that directory
 2) Start Zookeeper:
@@ -78,7 +78,7 @@ hosts file.
 
         bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic test --from-beginning
 
-## Source Connector
+== Source Connector
 
 The starting configuration for your connect worker is provided by a configuration file. However, once the worker has
 started the configuration can be changed using the connect REST API which is generally available on
@@ -96,7 +96,7 @@ An example below shows the format it expects:-
     "tasks.max":"1", "file":"test.sink.txt", "topics":"connect-test" }}' http://localhost:8083/connectors
 
 
-### Start a Kafka Connect Source Worker (Standalone)
+=== Start a Kafka Connect Source Worker (Standalone)
 
 Ideal for testing.
 
@@ -112,7 +112,7 @@ If you want to debug the connector, be sure to set some environment variables be
 
 In this case the startup will suspend till an IDE is connected via a remote-debugging session.
 
-### Start Kafka Connect Source Worker (Distributed Mode)
+=== Start Kafka Connect Source Worker (Distributed Mode)
 
 Ideal for production.
 
@@ -132,11 +132,11 @@ The configuration of the Connectors is then provided via REST interface:
     // TODO: Continue here ...
     "tasks.max":"1", "file":"test.sink.txt", "topics":"connect-test" }}' http://localhost:8083/connectors
 
-## Sink Connector
+== Sink Connector
 
 See https://github.com/apache/plc4x/tree/develop/plc4j/integrations/apache-kafka/config[config/sink.properties] for an example configuration.
 
-### Start a Kafka Connect Sink Worker (Standalone)
+=== Start a Kafka Connect Sink Worker (Standalone)
 
 Ideal for testing.
 
@@ -187,7 +187,7 @@ If you want to debug the connector, be sure to set some environment variables be
 
 In this case the startup will suspend till an IDE is connected via a remote-debugging session.
 
-### Start Kafka Connect Sink Worker (Distributed Mode)
+=== Start Kafka Connect Sink Worker (Distributed Mode)
 
 Ideal for production.
 
@@ -207,7 +207,7 @@ The configuration of the Connectors is then provided via REST interface:
     // TODO: Continue here ...
     "tasks.max":"1", "file":"test.sink.txt", "topics":"connect-test" }}' http://localhost:8083/connectors
 
-## Graceful Backoff
+== Graceful Backoff
 
 If an error occurs when reading or writing PLC addresses a graceful backoff has been implemented so that the PLC isn't
 bombarded with requests. However as the number of connectors for each PLC should be limited to reduce the load on the PLC,
@@ -219,7 +219,7 @@ connector, the poll rate of the connector has no affect on the PLC poll rate.
 For the sink connector, if a write fails it is retried a configurable number of times with a timeout between each time.
 A Retriable Exception is raised which provides jitter for the timing of the retries.
 
-## Schema Compatability
+== Schema Compatability
 
 PLC4X specifies a very basic schema and leaves the majority of the implementation to the user. It contains the
 following fields:-

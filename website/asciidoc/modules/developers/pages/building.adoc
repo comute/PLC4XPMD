@@ -15,7 +15,7 @@
 //  limitations under the License.
 //
 
-== Building PLC4X
+= Building PLC4X
 
 PLC4X is built with `Apache Maven` and we have tried to make the build as simple as possible.
 

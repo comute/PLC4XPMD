@@ -15,7 +15,7 @@
 //  limitations under the License.
 //
 
-== Architecture of PLC4X Connections
+= Architecture of PLC4X Connections
 
 === Simple case
 
