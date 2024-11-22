@@ -18,8 +18,6 @@
 #
 name: plc4x
 version: '0.12'
-prerelease: False
-title: PLC4X
 start_page: users:index.adoc
 nav:
 - modules/ROOT/nav.adoc
