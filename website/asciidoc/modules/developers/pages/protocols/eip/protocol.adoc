@@ -24,6 +24,8 @@
 ----
 @startuml
 
+scale 792 width
+
 (*) --> Connect
 
 partition "Connected" #EEEEEE {
