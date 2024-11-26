@@ -1198,7 +1198,6 @@ public class AdsProtocolLogic extends Plc4xProtocolBase<AmsTCPPacket> implements
     }
 
     protected byte[] serializePlcValue(PlcValue plcValue, String datatypeName) throws SerializationException {
-        // First check, if we have type information available.
         // Get the data type, allocate enough memory and serialize the value based on the
         // structure defined by the data type.
         Optional<AdsDataTypeTableEntry> dataTypeTableEntryOptional = getDataTypeTableEntry(datatypeName);
