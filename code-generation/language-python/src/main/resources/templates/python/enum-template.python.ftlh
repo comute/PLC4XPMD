@@ -58,10 +58,9 @@ ${import}
 </#macro>
 <#macro emitImport import>${helper.emitRequiredImport(import)}</#macro>
 <@importSectionWithContentBelow>
-<@emitImport import="from aenum import AutoNumberEnum" />
+<@emitImport import="from enum import Enum" />
 
-class ${type.name}(AutoNumberEnum):
-    <#if type.constantNames?has_content>_init_ = "value, <#list type.constantNames as constantName>${helper.camelCaseToSnakeCase(constantName)}<#sep>, </#sep></#list>"</#if>
+class ${type.name}(Enum):
     <#list type.enumValues as enumValue>
     ${enumValue.name}<#if !type.constantNames?has_content>:</#if> <@compress single_line=true>
             <#if type.type.isPresent()>
@@ -92,6 +91,16 @@ class ${type.name}(AutoNumberEnum):
     </@compress>
 
     </#list>
+
+    def __new__(cls, <#if type.constantNames?has_content>value, <#list type.constantNames as constantName>${helper.camelCaseToSnakeCase(constantName)}<#sep>, </#sep></#list><#else>value</#if>):
+        obj = object.__new__(cls)
+        obj._value_ = value
+        <#if type.constantNames?has_content>
+            <#list type.constantNames as constantName>
+        obj.${helper.camelCaseToSnakeCase(constantName)} = ${helper.camelCaseToSnakeCase(constantName)}
+            </#list>
+        </#if>
+        return obj
 
 </@importSectionWithContentBelow>
 

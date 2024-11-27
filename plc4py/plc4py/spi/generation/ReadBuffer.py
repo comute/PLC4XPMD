@@ -14,13 +14,14 @@
 #  KIND, either express or implied.  See the License for the
 #  specific language governing permissions and limitations
 #  under the License.
+
 import struct
 import types
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
-from typing import Any, List, Union
+from enum import Enum
+from typing import Any, List
 
-import aenum
 from bitarray import bitarray
 from bitarray.util import ba2base, ba2int, zeros
 
@@ -474,7 +475,7 @@ class ReadBufferByteBased(ReadBuffer):
         read_function=None,
         **kwargs,
     ) -> Any:
-        if isinstance(read_function, aenum._enum.EnumType):
+        if issubclass(read_function, Enum):
             enum_return_value = read_function(
                 ba2int(
                     self.bb[self.position : self.position + bit_length],
