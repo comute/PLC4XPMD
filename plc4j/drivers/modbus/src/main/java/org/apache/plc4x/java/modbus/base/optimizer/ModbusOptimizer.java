@@ -206,7 +206,21 @@ public class ModbusOptimizer extends SingleTagOptimizer {
                         }
 
                         byte[] responseData = response.getResponseDataForTag(modbusTag);
-                        ReadBuffer readBuffer = getReadBuffer(responseData, modbusContext.getByteOrder());
+                        ReadBuffer readBuffer = null;
+                        if ((modbusTag instanceof ModbusTagCoil) || (modbusTag instanceof ModbusTagDiscreteInput)) {
+                            //1. If this condition exists it is because we have an optimized buffer.
+                            if ((modbusTag.getNumberOfElements() == 1) & (responseData.length > 2)) {
+                                byte[] ret = new byte[2];
+                                ret[1] = 0x00;
+                                ret[0] = (isSet(responseData, modbusTag.getLogicalAddress()) ?(byte) 0x01 : 0x00);
+                                readBuffer = getReadBuffer(ret, ModbusByteOrder.BIG_ENDIAN);                                
+                            } else {
+                                readBuffer = getReadBuffer(responseData, ModbusByteOrder.BIG_ENDIAN);
+                            }
+                        } else {
+                            readBuffer = getReadBuffer(responseData, modbusContext.getByteOrder());
+                        }
+                        
                         try {
                             PlcValue plcValue = DataItem.staticParse(readBuffer, modbusTag.getDataType(),
                                 modbusTag.getNumberOfElements(),
@@ -383,13 +397,19 @@ public class ModbusOptimizer extends SingleTagOptimizer {
 
         public byte[] getResponseDataForTag(ModbusTag modbusTag) {
             byte[] itemData = new byte[modbusTag.getLengthBytes()];
-            int value = 0;
+            int value = 0;  
             switch(modbusTag.getDataType()) {
                 case BOOL: {
                         itemData = new byte[responseData.length];
-                        for (int i= 0; i < responseData.length; i++){
-                            itemData[i] = byteReverse(responseData[i]);
-                        }                        
+                        if ((modbusTag instanceof ModbusTagCoil) || (modbusTag instanceof ModbusTagDiscreteInput)) {
+                            for (int i= 0; i < responseData.length; i++){
+                                itemData[i] = byteReverse(responseData[i]);
+                            }            
+                        } else {
+                            for (int i= 0; i < responseData.length; i++){
+                                itemData[i] = responseData[i];
+                            }                              
+                        }
                     }                    
                     break;
                 default:
@@ -410,10 +430,17 @@ public class ModbusOptimizer extends SingleTagOptimizer {
               }
             return b;
         }
-        
-        
+                      
     }
 
+        
+    public boolean isSet(byte[] arr, int bit) {
+        int index = bit / 8; 
+        int bitPosition = 8 - bit % 8; 
+        return (arr[index] >> bitPosition & 1) == 1;
+    }    
+    
+    
     protected interface TagFactory {
         PlcTag createTag(int address, int count, ModbusDataType dataType);
     }

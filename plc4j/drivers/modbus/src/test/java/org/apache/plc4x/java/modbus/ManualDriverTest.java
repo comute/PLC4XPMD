@@ -35,7 +35,7 @@ public class ManualDriverTest {
      */
     public static void main(String[] args) throws Exception {
         //final PlcConnection connection = new DefaultPlcDriverManager().getConnection("modbus-tcp://10.211.55.3?default-payload-byte-order=BIG_ENDIAN");
-        final PlcConnection connection = new DefaultPlcDriverManager().getConnection("modbus-tcp://10.211.55.3?default-payload-byte-order=LITTLE_ENDIAN");
+        final PlcConnection connection = new DefaultPlcDriverManager().getConnection("modbus-tcp://10.10.1.200:10502?default-payload-byte-order=LITTLE_ENDIAN");
         //final PlcConnection connection = new DefaultPlcDriverManager().getConnection("modbus-tcp://10.211.55.3?default-payload-byte-order=BIG_ENDIAN_BYTE_SWAP");
         //final PlcConnection connection = new DefaultPlcDriverManager().getConnection("modbus-tcp://10.211.55.3?default-payload-byte-order=LITTLE_ENDIAN_BYTE_SWAP");
         final PlcReadRequest readRequest = connection.readRequestBuilder()
