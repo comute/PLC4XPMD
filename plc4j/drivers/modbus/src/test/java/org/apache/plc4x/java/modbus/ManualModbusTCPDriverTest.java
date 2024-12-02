@@ -30,6 +30,29 @@ public class ManualModbusTCPDriverTest extends ManualTest {
      *
      * Located in "main"
      *
+     * Reference server/client: ModbusTools
+     * https://github.com/serhmarch/ModbusTools/releases/tag/v0.3.8
+     *
+     * If you report any improvement points on the Modbus driver, 
+     * please run the tests on the reference device indicated above.
+     * One of the virtues and weaknesses of the Modbus protocol is 
+     * that it gives creative freedom to manufacturers for the implementation 
+     * of Scalar types, so the indicated device is the reference.
+     *
+     * Modbus Application Protocol Specification, V1.1.b
+     * Section 4.2 Data Encoding
+     * MODBUS uses a ‘big-Endian’ representation for addresses and data items.
+     * This means that when a numerical quantity larger than a single byte is 
+     * transmitted, the most significant byte is sent first. So for example
+     *
+     * Register size    value
+     *  16 - bits       0x1234  the first byte sent is  0x12  then 0x34    
+     *
+     * 
+     * https://www.h-schmidt.net/FloatConverter/IEEE754.html
+     * 123456.00 -> 47 f1 20 00
+     * Modbus    -> 20 00 47 f1
+    
 
     hurz_BOOL  := TRUE;
 	hurz_BYTE  := 42;
@@ -69,22 +92,22 @@ public class ManualModbusTCPDriverTest extends ManualTest {
     }
 
     public static void main(String[] args) throws Exception {
-        ManualModbusTCPDriverTest test = new ManualModbusTCPDriverTest("modbus-tcp://192.168.23.30");
+        ManualModbusTCPDriverTest test = new ManualModbusTCPDriverTest("modbus-tcp://10.10.1.200:10502?default-payload-byte-order=LITTLE_ENDIAN_BYTE_SWAP");
         test.addTestCase("holding-register:1:BOOL", new PlcBOOL(true)); // 0001
         test.addTestCase("holding-register:2:BYTE", new PlcBYTE(42)); // 2A
         //test.addTestCase("holding-register:3:WORD", new PlcWORD(42424)); // A5B8
-        test.addTestCase("holding-register:4:DWORD", new PlcDWORD(4242442424L)); // FCDE 88B8
+        test.addTestCase("holding-register:4:DWORD", new PlcDWORD(424244242L)); // 1949 7412
 //        test.addTestCase("holding-register:6:LWORD", new PlcLWORD(4242442424242424242L)); // FCDE 88B8 FCDE 88B8
         test.addTestCase("holding-register:10:SINT", new PlcSINT(-42)); // D6
         test.addTestCase("holding-register:11:USINT", new PlcUSINT(42)); // 2A
         test.addTestCase("holding-register:12:INT", new PlcINT(-2424)); // F688
         test.addTestCase("holding-register:13:UINT", new PlcUINT(42424)); // A5B8
-        test.addTestCase("holding-register:14:DINT", new PlcDINT(-242442424)); // F18C 9F48
-        test.addTestCase("holding-register:16:UDINT", new PlcUDINT(4242442424L));// FCDE 88B8
+        test.addTestCase("holding-register:14:DINT", new PlcDINT(-242442424)); // 1949 7412
+        test.addTestCase("holding-register:16:UDINT", new PlcUDINT(424244242L));// FCDE 88B8
         test.addTestCase("holding-register:18:LINT", new PlcLINT(-4242442424242424242L));// C51F D117 B2FB B64E
         test.addTestCase("holding-register:22:ULINT", new PlcULINT(4242442424242424242L));// 3AE0 2EE8 4D04 49B2
         test.addTestCase("holding-register:26:REAL", new PlcREAL(3.141593F));// 4049 0FDC
-        test.addTestCase("holding-register:28:LREAL", new PlcLREAL(2.71828182846D)); // 4005 BF0A 8B14 5FCF
+        test.addTestCase("holding-register:28:LREAL", new PlcLREAL(2.71)); // 4005 BF0A 8B14 5FCF
         //test.addTestCase("holding-register:32:TIME", "PT1.234S"); // 04D2
         //test.addTestCase("holding-register::LTIME", "PT24015H23M12.034002044S");
         //test.addTestCase("holding-register::DATE", "1998-03-28");

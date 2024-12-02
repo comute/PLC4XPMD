@@ -19,6 +19,8 @@
 
 package org.apache.plc4x.java.modbus.base.optimizer;
 
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
 import org.apache.plc4x.java.api.messages.PlcReadRequest;
 import org.apache.plc4x.java.api.messages.PlcReadResponse;
 import org.apache.plc4x.java.api.model.PlcTag;
@@ -192,33 +194,7 @@ public class ModbusOptimizer extends SingleTagOptimizer {
                 }
                 // Go through all responses till we find one where that contains the current tag's data.
                 for (Response response : responses.get(tagType)) {
-                    if(modbusTag instanceof ModbusTagCoil) {
-                        if(response.matchesCoil(modbusTag)) {
-                            // If this response was invalid, return all associated addresses as equally invalid.
-                            // TODO: Possibly it would be worth doing a single item request for each of these
-                            //  tags in order to find out which ones are actually invalid as if one item in the
-                            //  current request exceeds the address range, all items in this chunk will fail, even
-                            //  if only one element was invalid.
-                            if(response.getResponseCode() != PlcResponseCode.OK) {
-                                values.put(tagName, new DefaultPlcResponseItem<>(response.getResponseCode(), null));
-                                break;
-                            }
-
-                            // Coils are read completely different from registers.
-                            ModbusTagCoil coilTag = (ModbusTagCoil) modbusTag;
-
-                            // Calculate the byte that contains the response for this Coil
-                            byte[] responseData = response.getResponseData();
-                            int bitPosition = coilTag.getAddress() - response.startingAddress;
-                            int bytePosition = bitPosition / 8;
-                            int bitPositionInByte = bitPosition % 8;
-                            boolean isBitSet = (responseData[bytePosition] & (1 << bitPositionInByte)) != 0;
-                            values.put(tagName, new DefaultPlcResponseItem<>(PlcResponseCode.OK, new PlcBOOL(isBitSet)));
-                            break;
-                        }
-                    }
-                    // Read a normal register.
-                    else if (response.matchesRegister(modbusTag)) {
+                    if (response.matchesRegister(modbusTag)) {
                         // If this response was invalid, return all associated addresses as equally invalid.
                         // TODO: Possibly it would be worth doing a single item request for each of these
                         //  tags in order to find out which ones are actually invalid as if one item in the
@@ -230,7 +206,21 @@ public class ModbusOptimizer extends SingleTagOptimizer {
                         }
 
                         byte[] responseData = response.getResponseDataForTag(modbusTag);
-                        ReadBuffer readBuffer = getReadBuffer(responseData, modbusContext.getByteOrder());
+                        ReadBuffer readBuffer = null;
+                        if ((modbusTag instanceof ModbusTagCoil) || (modbusTag instanceof ModbusTagDiscreteInput)) {
+                            //1. If this condition exists it is because we have an optimized buffer.
+                            if ((modbusTag.getNumberOfElements() == 1) & (responseData.length > 2)) {
+                                byte[] ret = new byte[2];
+                                ret[1] = 0x00;
+                                ret[0] = (isSet(responseData, modbusTag.getLogicalAddress()) ?(byte) 0x01 : 0x00);
+                                readBuffer = getReadBuffer(ret, ModbusByteOrder.BIG_ENDIAN);                                
+                            } else {
+                                readBuffer = getReadBuffer(responseData, ModbusByteOrder.BIG_ENDIAN);
+                            }
+                        } else {
+                            readBuffer = getReadBuffer(responseData, modbusContext.getByteOrder());
+                        }
+                        
                         try {
                             PlcValue plcValue = DataItem.staticParse(readBuffer, modbusTag.getDataType(),
                                 modbusTag.getNumberOfElements(),
@@ -407,11 +397,50 @@ public class ModbusOptimizer extends SingleTagOptimizer {
 
         public byte[] getResponseDataForTag(ModbusTag modbusTag) {
             byte[] itemData = new byte[modbusTag.getLengthBytes()];
-            System.arraycopy(responseData, (modbusTag.getAddress() - startingAddress) * 2, itemData, 0, modbusTag.getLengthBytes());
+            int value = 0;  
+            switch(modbusTag.getDataType()) {
+                case BOOL: {
+                        itemData = new byte[responseData.length];
+                        if ((modbusTag instanceof ModbusTagCoil) || (modbusTag instanceof ModbusTagDiscreteInput)) {
+                            for (int i= 0; i < responseData.length; i++){
+                                itemData[i] = byteReverse(responseData[i]);
+                            }            
+                        } else {
+                            for (int i= 0; i < responseData.length; i++){
+                                itemData[i] = responseData[i];
+                            }                              
+                        }
+                    }                    
+                    break;
+                default:
+                         System.arraycopy(responseData, 
+                                 (modbusTag.getAddress() - startingAddress) * 2, 
+                                 itemData, 0, modbusTag.getLengthBytes());                    
+            }
+
             return itemData;
         }
+        
+        public static byte byteReverse(byte x) {
+            byte b = 0;
+            for (int i = 0; i < 8; ++i) {
+                b<<=1;
+                b|=( x &1);
+                x>>=1;
+              }
+            return b;
+        }
+                      
     }
 
+        
+    public boolean isSet(byte[] arr, int bit) {
+        int index = bit / 8; 
+        int bitPosition = 8 - bit % 8; 
+        return (arr[index] >> bitPosition & 1) == 1;
+    }    
+    
+    
     protected interface TagFactory {
         PlcTag createTag(int address, int count, ModbusDataType dataType);
     }

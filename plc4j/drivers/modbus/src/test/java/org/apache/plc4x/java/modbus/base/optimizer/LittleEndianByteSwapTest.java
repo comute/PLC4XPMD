@@ -98,6 +98,7 @@ public class LittleEndianByteSwapTest {
         input.put("variable44",    new String[]{"holding-register:177:REAL", "0.3768"});
         input.put("variable45",    new String[]{"holding-register:181:REAL", "0.0"});
         input.put("variable46",    new String[]{"holding-register:185:REAL", "-0.01143"});
+        
         input.put("variable47",    new String[]{"coil:1:BOOL",               "false"});
         input.put("variable48",    new String[]{"coil:3:BOOL",               "false"});
         input.put("variable49",    new String[]{"coil:5:BOOL",               "true"});
@@ -183,9 +184,9 @@ public class LittleEndianByteSwapTest {
         input.put("variable129",   new String[]{"coil:165:BOOL",             "false"});
         input.put("variable130",   new String[]{"coil:167:BOOL",             "false"});
         input.put("variable131",   new String[]{"coil:169:BOOL",             "false"});
-        input.put("variable132",   new String[]{"coil:171:BOOL",             "false"});
+        input.put("variable132",   new String[]{"coil:171:BOOL",             "true"});
         input.put("variable133",   new String[]{"coil:173:BOOL",             "false"});
-        input.put("variable134",   new String[]{"coil:175:BOOL",             "false"});
+        input.put("variable134",   new String[]{"coil:175:BOOL",             "true"});
         PlcReader mockPlcReader = Mockito.mock(PlcReader.class);
         PlcTagHandler modbusTagHandler = new ModbusTagHandler();
         PlcReadRequest.Builder builder = new DefaultPlcReadRequest.Builder(mockPlcReader, modbusTagHandler);
@@ -248,7 +249,8 @@ public class LittleEndianByteSwapTest {
         Map<PlcReadRequest, BaseOptimizer.SubResponse<PlcReadResponse>> readResponses = new HashMap<>();
         readResponses.put(firstRequest, new BaseOptimizer.SubResponse<>(
             new DefaultPlcReadResponse(firstRequest, Map.of(
-                "coils0", new DefaultPlcResponseItem<>(PlcResponseCode.OK, new PlcRawByteArray(Hex.decodeHex("3060480c00c084000000000000000000000000000000")))))));
+                //"coils0", new DefaultPlcResponseItem<>(PlcResponseCode.OK, new PlcRawByteArray(Hex.decodeHex("3060480c00c084000000000000000000000000000000")))))));
+                "coils0", new DefaultPlcResponseItem<>(PlcResponseCode.OK, new PlcRawByteArray(Hex.decodeHex("10404004004004000000000000000000000000000044")))))));
         readResponses.put(secondRequest, new BaseOptimizer.SubResponse<>(
             new DefaultPlcReadResponse(secondRequest, Map.of(
                 "registers0", new DefaultPlcResponseItem<>(PlcResponseCode.OK, new PlcRawByteArray(Hex.decodeHex("134141b000000000f80146c3000000003852c31f000000000b7841ae00000000fc0046e000000000028fc31f00000000c50441ab00000000540046dd00000000c000c31e000000006e973f32000000009998420300000000a5e33c9b00000000ccd041fc00000000020c3f2f00000000c3f9409e0000000047ae3f39000000009fbe3f3a00000000fbe83ff900000000d70a3aa30000000033333e33000000008f5c412400000000b83143d4000000005c293f5700000000c28f3f0500000000ac093f3c00000000fbe7413a0000000000000000000000000000000000000000e0df3f3b0000000023a33f3900000000a3d74220")))))));
@@ -270,6 +272,7 @@ public class LittleEndianByteSwapTest {
         for (String name : input.keySet()) {
             String[] data = input.get(name);
             String readValue = readResponse.getString(name);
+            System.out.println(name + " : " + data[1] + " : " + readValue );
             Assertions.assertEquals(data[1], readValue);
         }
     }

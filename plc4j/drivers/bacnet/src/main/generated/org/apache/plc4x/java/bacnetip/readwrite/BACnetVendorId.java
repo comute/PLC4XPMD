@@ -50,7 +50,7 @@ public enum BACnetVendorId {
   TACAB((int) 19, (int) 19, (String) "TAC AB"),
   HEWLETT_PACKARD_COMPANY((int) 20, (int) 20, (String) "Hewlett-Packard Company"),
   DORSETTES_INC((int) 21, (int) 21, (String) "Dorsette’s Inc."),
-  SIEMENS_SCHWEIZAG_FORMERLY_CERBERUSAG(
+  SIEMENS_SCHWEIZA_FORMERLY_CERBERUSAG(
       (int) 22, (int) 22, (String) "Siemens Schweiz AG (Formerly: Cerberus AG)"),
   YORK_CONTROLS_GROUP((int) 23, (int) 23, (String) "York Controls Group"),
   AUTOMATED_LOGIC_CORPORATION((int) 24, (int) 24, (String) "Automated Logic Corporation"),
